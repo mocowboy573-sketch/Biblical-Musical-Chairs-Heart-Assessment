@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Biblical Musical Chairs Heart Assessment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <h1>Biblical Musical Chairs Heart Assessment</h1>
+
+    <!-- STEP 1: SELECT ITEMS -->
+    <section id="step1">
+      <h2>Step 1: Select Exactly 8 Items</h2>
+      <p>Select the 8 things that matter most to you right now.</p>
+      <p class="counter" id="selectionCounter">Selected: 0 / 8</p>
+
+      <div id="checkboxList" class="checkbox-list">
+        <!-- Checkboxes will be injected by script.js -->
+      </div>
+
+      <div class="buttons">
+        <button id="toStep2">Continue</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: RATE ITEMS -->
+    <section id="step2" class="hidden">
+      <h2>Step 2: Rate Your 8 Selected Items</h2>
+      <p>Rate each item from 1 (least important) to 10 (most important).</p>
+
+      <div id="ratingsContainer" class="ratings-container">
+        <!-- Rating inputs will be injected by script.js -->
+      </div>
+
+      <div class="buttons">
+        <button id="backToStep1">Back</button>
+        <button id="toStep3">Calculate</button>
+      </div>
+    </section>
+
+    <!-- STEP 3: RESULTS -->
+    <section id="step3" class="hidden">
+      <h2>Results</h2>
+
+      <div id="resultsNarrative" class="results-box">
+        <!-- Narrative will be injected by script.js -->
+      </div>
+
+      <div class="buttons">
+        <a href="Biblical Musical Chairs Heart Assessment.pdf" download class="btn-link">
+          Download PDF Version
+        </a>
+        <button id="startOver">Start Over</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
