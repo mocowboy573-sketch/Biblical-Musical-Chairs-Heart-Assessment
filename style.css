@@ -1,63 +1,70 @@
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: #0d1b2a;
-    color: #e0e1dd;
-    padding: 20px;
+:root{
+  --bg:#0d1b2a;
+  --panel:#1b263b;
+  --accent:#f0c75e;
+  --muted:#e0e1dd;
+  --panel-border:#415a77;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--muted);
+  padding:20px;
+  -webkit-font-smoothing:antialiased;
 }
 
-h1 {
-    color: #e0e1dd;
+header{ text-align:center; margin-bottom:24px }
+h1{ margin:0 0 6px 0; font-size:1.6rem }
+h2{ color:var(--accent); margin:0 0 12px 0 }
+
+.category{
+  background:var(--panel);
+  padding:14px;
+  margin-bottom:16px;
+  border-radius:6px;
+  border-left:5px solid var(--panel-border);
 }
 
-h2 {
-    color: #f0c75e;
+.item-list{ columns:2; column-gap:24px; }
+
+button{
+  display:inline-block;
+  padding:10px 16px;
+  background:var(--accent);
+  color:var(--bg);
+  border:0;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  margin-top:14px;
 }
 
-.category {
-    background: #1b263b;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    border-left: 5px solid #415a77;
+button:hover{ filter:brightness(1.05) }
+
+#ratingSection, #results, #narrativeBox{
+  display:none;
+  background:var(--panel);
+  padding:18px;
+  border-radius:6px;
+  margin-top:18px;
+  border-left:5px solid var(--accent);
 }
 
-.item-list {
-    columns: 2;
+.rating-item{ margin-bottom:12px }
+
+.scripture-block{ margin-bottom:12px }
+
+.tie-message{
+  margin-top:12px;
+  color:#ffd7a6;
+  font-weight:600;
 }
 
-button {
-    padding: 12px 20px;
-    background: #f0c75e;
-    color: #0d1b2a;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-button:hover {
-    background: #ffd77f;
-}
-
-#ratingSection, #results, #narrativeBox {
-    display: none;
-    background: #1b263b;
-    padding: 20px;
-    border-radius: 6px;
-    border-left: 5px solid #f0c75e;
-    margin-top: 20px;
-}
-
-.scripture-block {
-    margin-bottom: 20px;
-}
-
-.rating-item {
-    margin-bottom: 15px;
+/* responsive */
+@media (max-width:700px){
+  .item-list{ columns:1 }
+  h1{ font-size:1.3rem }
 }
