@@ -1,6 +1,3 @@
-// ---------------------------
-// CATEGORY DATA
-// ---------------------------
 const categories = {
     "Collections": [
         "Money","Heirlooms","Souvenirs","Antiques","Watches","Shoes","Hats","Clothes","Toys",
@@ -41,14 +38,15 @@ const categories = {
         "Preaching/Teaching","Church","Church Family","Caring for Others","Prayer",
         "Praying for Others","Miracles, Signs, Wonders","Worship/Praise"
     ],
+    "Travel": [
+        "Traveling","Flying","Cruises"
+    ],
     "Other": [
         "Beer","Liquor","Alcohol","Smoking","Vaping"
     ]
 };
 
-// ---------------------------
-// BUILD CATEGORY CHECKBOXES
-// ---------------------------
+// Build categories
 const categoriesDiv = document.getElementById("categories");
 
 Object.entries(categories).forEach(([category, items]) => {
@@ -67,9 +65,7 @@ Object.entries(categories).forEach(([category, items]) => {
     categoriesDiv.appendChild(div);
 });
 
-// ---------------------------
-// HANDLE TOP 8 SELECTION
-// ---------------------------
+// Handle selection
 document.getElementById("submitSelection").onclick = () => {
     const selected = [...document.querySelectorAll('input[name="item"]:checked')].map(i => i.value);
 
@@ -96,9 +92,7 @@ document.getElementById("submitSelection").onclick = () => {
     document.getElementById("ratingSection").style.display = "block";
 };
 
-// ---------------------------
-// CALCULATE RESULTS + HIDDEN RULE
-// ---------------------------
+// Calculate results
 document.getElementById("seeResults").onclick = () => {
     const ratings = {};
     const selects = document.querySelectorAll("#ratingForm select");
