@@ -1,5 +1,5 @@
 // script.js — two-step selection then rating flow
-// Tie-breaker logic is applied only during the rating step (Generate Results) and is not shown in the UI.
+// Tie-breaker is hidden and applied only during the rating sort step.
 
 (() => {
   'use strict';
@@ -121,7 +121,7 @@
       return { field: id, score };
     });
 
-    // sort by score desc; tie-breaker applied here only
+    // sort by score desc; hidden tie-breaker applied here only
     selected.sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
       // hidden tie-breaker: prioritize GodJesusHolySpirit if present among tied items
@@ -176,15 +176,35 @@
   function categoryOfField(field){
     const mapping = {
       'Religion':'BELIEFS','Culture':'BELIEFS','Science':'BELIEFS','Bible':'BELIEFS','GodJesusHolySpirit':'BELIEFS',
+      'Evangelism':'BELIEFS','PreachingTeaching':'BELIEFS','Church':'BELIEFS','ChurchFamily':'BELIEFS','CaringforOthers':'BELIEFS',
+      'Prayer':'BELIEFS','PrayingforOthers':'BELIEFS','MiraclesSignsWonders':'BELIEFS','WorshipPraise':'BELIEFS',
+
+      'Cars':'COLLECTIONS','Collecting':'COLLECTIONS','Art':'COLLECTIONS','Antiques':'COLLECTIONS',
+
       'Walking':'EXERCISE','Running':'EXERCISE','LiftingWeights':'EXERCISE','Crossfit':'EXERCISE','GymTime':'EXERCISE','Yoga':'EXERCISE',
+
       'AloneTime':'HOME RELATED','BeingHome':'HOME RELATED','TravelingLocal':'HOME RELATED','Holidays':'HOME RELATED','FamilyTime':'HOME RELATED','SleepingNapping':'HOME RELATED',
-      'Puzzles':'INDOOR ACTIVITIES','Reading':'INDOOR ACTIVITIES','Movies':'INDOOR ACTIVITIES','ProducingMusic':'INDOOR ACTIVITIES','VideoGames':'INDOOR ACTIVITIES',
+
+      'Puzzles':'INDOOR ACTIVITIES','Reading':'INDOOR ACTIVITIES','Writing':'INDOOR ACTIVITIES','Journaling':'INDOOR ACTIVITIES','Movies':'INDOOR ACTIVITIES','ProducingMusic':'INDOOR ACTIVITIES',
+      'WatchingTV':'INDOOR ACTIVITIES','VideoGames':'INDOOR ACTIVITIES','BoardCardGames':'INDOOR ACTIVITIES','Sewing':'INDOOR ACTIVITIES','Eating':'INDOOR ACTIVITIES','CookingBaking':'INDOOR ACTIVITIES',
+      'Drawing':'INDOOR ACTIVITIES','Crafting':'INDOOR ACTIVITIES','DigitalCreator':'INDOOR ACTIVITIES','Sculpting':'INDOOR ACTIVITIES','Woodworking':'INDOOR ACTIVITIES','Acting':'INDOOR ACTIVITIES',
+      'PlayingMusic':'INDOOR ACTIVITIES','DateNights':'INDOOR ACTIVITIES','Dancing':'INDOOR ACTIVITIES','SingingKaraoke':'INDOOR ACTIVITIES',
+
       'WorkJob':'OCCUPATION','Volunteering':'OCCUPATION','Leading':'OCCUPATION','Following':'OCCUPATION','Supervising':'OCCUPATION','Mentoring':'OCCUPATION',
+
       'Beer':'OTHER','Liquor':'OTHER','Alcohol':'OTHER','Smoking':'OTHER','Vaping':'OTHER',
-      'Gardening':'OUTDOOR ACTIVITIES','Camping':'OUTDOOR ACTIVITIES','Fishing':'OUTDOOR ACTIVITIES','Hiking':'OUTDOOR ACTIVITIES','BeachLife':'OUTDOOR ACTIVITIES',
+
+      'Gardening':'OUTDOOR ACTIVITIES','Lawncare':'OUTDOOR ACTIVITIES','Driving':'OUTDOOR ACTIVITIES','Racing':'OUTDOOR ACTIVITIES','Cornhole':'OUTDOOR ACTIVITIES','Horseshoes':'OUTDOOR ACTIVITIES',
+      'ScubaDiving':'OUTDOOR ACTIVITIES','Shopping':'OUTDOOR ACTIVITIES','BikeRiding':'OUTDOOR ACTIVITIES','Surfing':'OUTDOOR ACTIVITIES','Hunting':'OUTDOOR ACTIVITIES','BeachLife':'OUTDOOR ACTIVITIES',
+      'Tanning':'OUTDOOR ACTIVITIES','Birdwatching':'OUTDOOR ACTIVITIES','Paintball':'OUTDOOR ACTIVITIES','Archery':'OUTDOOR ACTIVITIES','Photography':'OUTDOOR ACTIVITIES','OffRoading':'OUTDOOR ACTIVITIES',
+      'Mudding':'OUTDOOR ACTIVITIES','Camping':'OUTDOOR ACTIVITIES','Fishing':'OUTDOOR ACTIVITIES','Hiking':'OUTDOOR ACTIVITIES',
+
       'Friends':'PEOPLE','Family':'PEOPLE','Partner':'PEOPLE','Children':'PEOPLE','Pets':'PEOPLE','Romance':'PEOPLE',
-      'Football':'SPORTS','Baseball':'SPORTS','Soccer':'SPORTS','Basketball':'SPORTS','Golf':'SPORTS','Tennis':'SPORTS','Pickleball':'SPORTS',
-      'Cars':'TRANSPORTATION','Trucks':'TRANSPORTATION','Motorcycles':'TRANSPORTATION','Dirtbikes':'TRANSPORTATION','4Wheelers':'TRANSPORTATION','Trains':'TRANSPORTATION','Planes':'TRANSPORTATION',
+
+      'Football':'SPORTS','Baseball':'SPORTS','Soccer':'SPORTS','Basketball':'SPORTS','Golf':'SPORTS','Tennis':'SPORTS','Pickleball':'SPORTS','MartialArts':'SPORTS',
+      'Bowling':'SPORTS','Skateboarding':'SPORTS','Swimming':'SPORTS','OtherSport':'SPORTS','Gymnastics':'SPORTS','Volleyball':'SPORTS',
+
+      'Trucks':'TRANSPORTATION','Motorcycles':'TRANSPORTATION','Dirtbikes':'TRANSPORTATION','4Wheelers':'TRANSPORTATION','Trains':'TRANSPORTATION','Planes':'TRANSPORTATION',
       'Traveling':'TRAVEL','Flying':'TRAVEL','Cruises':'TRAVEL'
     };
     return mapping[field] || 'GENERAL';
