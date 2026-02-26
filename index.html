@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Treasure of Our Heart Questionnaire</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Treasure of Our Heart Assessment</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-<header>
-    <h1>Treasure of Our Heart Questionnaire</h1>
+  <header>
+    <h1>Treasure of Our Heart Assessment</h1>
     <p>Select the 8 things that hold the greatest place in your heart.</p>
-</header>
+  </header>
 
-<form id="selectionForm">
+  <form id="selectionForm">
     <div id="categories"></div>
     <button type="button" id="submitSelection">Submit Top 8</button>
-</form>
+  </form>
 
-<section id="ratingSection">
+  <section id="ratingSection">
     <h2>Rate Your Top 8 (1–20)</h2>
     <form id="ratingForm"></form>
-    <button id="seeResults">See Results</button>
-</section>
+    <button id="seeResults" type="button">See Results</button>
+  </section>
 
-<section id="results"></section>
+  <section id="results"></section>
 
-<section id="narrativeBox">
-    <h2>Narrative Reflection</h2>
+  <section id="narrativeBox" aria-live="polite">
+    <h2>Narrative</h2>
 
     <div class="scripture-block">
-        <p><strong>Matthew 6:19</strong> — “Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal.”</p>
+      <p><strong>Matthew 6:19</strong> — “Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal.”</p>
     </div>
 
     <div class="scripture-block">
-        <p><strong>Luke 14:26</strong> — “If anyone comes to me and does not hate father and mother, wife and children, brothers and sisters—yes, even their own life—such a person cannot be my disciple.”</p>
+      <p><strong>Luke 14:26</strong> — “If anyone comes to me and does not hate father and mother, wife and children, brothers and sisters—yes, even their own life—such a person cannot be my disciple.”</p>
     </div>
 
     <div class="scripture-block">
-        <p><strong>Matthew 6:20</strong> — “But store up for yourselves treasures in heaven, where moths and vermin do not destroy, and where thieves do not break in and steal.”</p>
+      <p><strong>Matthew 6:20</strong> — “But store up for yourselves treasures in heaven, where moths and vermin do not destroy, and where thieves do not break in and steal.”</p>
     </div>
 
-    <p id="tieBreakerMessage"></p>
-</section>
+    <p id="tieBreakerMessage" class="tie-message"></p>
+  </section>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
