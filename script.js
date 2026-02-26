@@ -136,6 +136,38 @@ document.getElementById('seeResults').addEventListener('click', ()=>{
   // show tie-breaker message only if triggered (user-provided verbiage)
   const tieMsg = document.getElementById('tieBreakerMessage');
   tieMsg.textContent = tieBreakerTriggered
-    ? `Matthew 22:37, "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'" The reason God/Jesus/Holy Spirit was bumped down when a tie occured is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.`
+    ? `Matthew 22:37 (NKJV), "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'" The reason God/Jesus/Holy Spirit was bumped down when a tie occurred is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.`
     : '';
+
+  // enable download button and attach data
+  document.getElementById('downloadResults').onclick = () => downloadResults(sorted, tieBreakerTriggered);
 });
+
+// create and download a text file with results + narrative
+function downloadResults(sortedArray, tieTriggered){
+  const now = new Date().toISOString();
+  let text = `Biblical Musical Chairs Heart Assessment Results\nGenerated: ${now}\n\nRanked Results:\n`;
+  sortedArray.forEach(([item, rating], idx) => {
+    text += `${idx+1}. ${item} — Rating: ${rating}\n`;
+  });
+
+  text += `\nNarrative Scriptures (NKJV):\n`;
+  text += `Matthew 6:19 — Do not lay up for yourselves treasures on earth, where moth and rust destroy and where thieves break in and steal;\n`;
+  text += `Luke 14:26 — If anyone comes to Me and does not hate his father and mother, wife and children, brothers and sisters, yes, and his own life also, he cannot be My disciple.\n`;
+  text += `Matthew 6:20 — but lay up for yourselves treasures in heaven, where neither moth nor rust destroys and where thieves do not break in and steal.\n`;
+  text += `Psalm 139:23 — Search me, O God, and know my heart; try me, and know my anxieties.\n\n`;
+
+  if(tieTriggered){
+    text += `Tie-breaker note:\nMatthew 22:37 — "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'"\nThe reason God/Jesus/Holy Spirit was bumped down when a tie occurred is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.\n`;
+  }
+
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'TreasureOfOurHeart_Results.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
