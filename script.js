@@ -1,5 +1,5 @@
 // script.js — two-step selection then rating flow
-// Tie-breaker is hidden and applied only during the rating sort step.
+// Hidden tie-breaker applied only during rating sort.
 
 (() => {
   'use strict';
@@ -34,12 +34,13 @@
     selectedCountEl.textContent = String(count);
   }
 
+  // Initialize: disable selection-phase rating inputs but DO NOT set a default value
   (function initRatings() {
     checkboxes.forEach(cb => {
       const rate = ratingInputFor(cb.dataset.field);
       if (rate) {
         rate.disabled = true;
-        if (!rate.value) rate.value = 10;
+        // intentionally do not set rate.value here so the input is empty until rating step
       }
     });
     updateSelectedCount();
@@ -61,7 +62,11 @@
     checkboxes.forEach(cb => {
       cb.checked = false;
       const rate = ratingInputFor(cb.dataset.field);
-      if (rate) { rate.disabled = true; rate.value = 10; }
+      if (rate) {
+        rate.disabled = true;
+        // clear any value so selection-phase inputs remain empty
+        rate.value = '';
+      }
     });
     updateSelectedCount();
     ratingPhase.style.display = 'none';
@@ -86,7 +91,7 @@
       row.innerHTML = `
         <label style="font-weight:600;">${escapeHtml(display)}</label>
         <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
-          <input type="number" id="rate_step_${field}" class="step-rate" min="1" max="20" value="10" />
+          <input type="number" id="rate_step_${escapeId(field)}" class="step-rate" min="1" max="20" value="10" />
         </div>
       `;
       selectedList.appendChild(row);
@@ -115,19 +120,22 @@
     }
 
     const selected = stepRates.map(input => {
-      const id = input.id.replace(/^rate_step_/, '');
+      const rawId = input.id.replace(/^rate_step_/, '');
+      const field = unescapeId(rawId);
       const raw = Number(input.value);
       const score = Number.isFinite(raw) ? Math.max(1, Math.min(20, Math.round(raw))) : 10;
-      return { field: id, score };
+      return { field, score };
     });
 
-    // sort by score desc; hidden tie-breaker applied here only
+    selected.forEach((s, i) => s._idx = i);
+
     selected.sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      // hidden tie-breaker: prioritize GodJesusHolySpirit if present among tied items
-      if (a.field === 'GodJesusHolySpirit' && b.field !== 'GodJesusHolySpirit') return -1;
-      if (b.field === 'GodJesusHolySpirit' && a.field !== 'GodJesusHolySpirit') return 1;
-      return a.field.localeCompare(b.field);
+      const aIsGod = (a.field === 'GodJesusHolySpirit');
+      const bIsGod = (b.field === 'GodJesusHolySpirit');
+      if (aIsGod && !bIsGod) return -1;
+      if (bIsGod && !aIsGod) return 1;
+      return a._idx - b._idx;
     });
 
     topContainer.innerHTML = '';
@@ -156,7 +164,9 @@
     reflectionBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
+  // Utilities (prettify, categoryOfField, scriptureFor, reflectionFor, escapeHtml, escapeId, unescapeId)
   function prettify(field){
+    if (!field) return '';
     return field
       .replace(/([A-Z])/g, ' $1')
       .replace(/_/g, ' ')
@@ -178,32 +188,22 @@
       'Religion':'BELIEFS','Culture':'BELIEFS','Science':'BELIEFS','Bible':'BELIEFS','GodJesusHolySpirit':'BELIEFS',
       'Evangelism':'BELIEFS','PreachingTeaching':'BELIEFS','Church':'BELIEFS','ChurchFamily':'BELIEFS','CaringforOthers':'BELIEFS',
       'Prayer':'BELIEFS','PrayingforOthers':'BELIEFS','MiraclesSignsWonders':'BELIEFS','WorshipPraise':'BELIEFS',
-
       'Cars':'COLLECTIONS','Collecting':'COLLECTIONS','Art':'COLLECTIONS','Antiques':'COLLECTIONS',
-
       'Walking':'EXERCISE','Running':'EXERCISE','LiftingWeights':'EXERCISE','Crossfit':'EXERCISE','GymTime':'EXERCISE','Yoga':'EXERCISE',
-
       'AloneTime':'HOME RELATED','BeingHome':'HOME RELATED','TravelingLocal':'HOME RELATED','Holidays':'HOME RELATED','FamilyTime':'HOME RELATED','SleepingNapping':'HOME RELATED',
-
       'Puzzles':'INDOOR ACTIVITIES','Reading':'INDOOR ACTIVITIES','Writing':'INDOOR ACTIVITIES','Journaling':'INDOOR ACTIVITIES','Movies':'INDOOR ACTIVITIES','ProducingMusic':'INDOOR ACTIVITIES',
       'WatchingTV':'INDOOR ACTIVITIES','VideoGames':'INDOOR ACTIVITIES','BoardCardGames':'INDOOR ACTIVITIES','Sewing':'INDOOR ACTIVITIES','Eating':'INDOOR ACTIVITIES','CookingBaking':'INDOOR ACTIVITIES',
       'Drawing':'INDOOR ACTIVITIES','Crafting':'INDOOR ACTIVITIES','DigitalCreator':'INDOOR ACTIVITIES','Sculpting':'INDOOR ACTIVITIES','Woodworking':'INDOOR ACTIVITIES','Acting':'INDOOR ACTIVITIES',
       'PlayingMusic':'INDOOR ACTIVITIES','DateNights':'INDOOR ACTIVITIES','Dancing':'INDOOR ACTIVITIES','SingingKaraoke':'INDOOR ACTIVITIES',
-
       'WorkJob':'OCCUPATION','Volunteering':'OCCUPATION','Leading':'OCCUPATION','Following':'OCCUPATION','Supervising':'OCCUPATION','Mentoring':'OCCUPATION',
-
       'Beer':'OTHER','Liquor':'OTHER','Alcohol':'OTHER','Smoking':'OTHER','Vaping':'OTHER',
-
       'Gardening':'OUTDOOR ACTIVITIES','Lawncare':'OUTDOOR ACTIVITIES','Driving':'OUTDOOR ACTIVITIES','Racing':'OUTDOOR ACTIVITIES','Cornhole':'OUTDOOR ACTIVITIES','Horseshoes':'OUTDOOR ACTIVITIES',
       'ScubaDiving':'OUTDOOR ACTIVITIES','Shopping':'OUTDOOR ACTIVITIES','BikeRiding':'OUTDOOR ACTIVITIES','Surfing':'OUTDOOR ACTIVITIES','Hunting':'OUTDOOR ACTIVITIES','BeachLife':'OUTDOOR ACTIVITIES',
       'Tanning':'OUTDOOR ACTIVITIES','Birdwatching':'OUTDOOR ACTIVITIES','Paintball':'OUTDOOR ACTIVITIES','Archery':'OUTDOOR ACTIVITIES','Photography':'OUTDOOR ACTIVITIES','OffRoading':'OUTDOOR ACTIVITIES',
       'Mudding':'OUTDOOR ACTIVITIES','Camping':'OUTDOOR ACTIVITIES','Fishing':'OUTDOOR ACTIVITIES','Hiking':'OUTDOOR ACTIVITIES',
-
       'Friends':'PEOPLE','Family':'PEOPLE','Partner':'PEOPLE','Children':'PEOPLE','Pets':'PEOPLE','Romance':'PEOPLE',
-
       'Football':'SPORTS','Baseball':'SPORTS','Soccer':'SPORTS','Basketball':'SPORTS','Golf':'SPORTS','Tennis':'SPORTS','Pickleball':'SPORTS','MartialArts':'SPORTS',
       'Bowling':'SPORTS','Skateboarding':'SPORTS','Swimming':'SPORTS','OtherSport':'SPORTS','Gymnastics':'SPORTS','Volleyball':'SPORTS',
-
       'Trucks':'TRANSPORTATION','Motorcycles':'TRANSPORTATION','Dirtbikes':'TRANSPORTATION','4Wheelers':'TRANSPORTATION','Trains':'TRANSPORTATION','Planes':'TRANSPORTATION',
       'Traveling':'TRAVEL','Flying':'TRAVEL','Cruises':'TRAVEL'
     };
@@ -266,6 +266,17 @@
   function escapeHtml(str) {
     if (typeof str !== 'string') return '';
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function escapeId(s) {
+    return encodeURIComponent(s).replace(/%/g, '_');
+  }
+  function unescapeId(s) {
+    try {
+      return decodeURIComponent(s.replace(/_/g, '%'));
+    } catch (e) {
+      return s;
+    }
   }
 
 })();
