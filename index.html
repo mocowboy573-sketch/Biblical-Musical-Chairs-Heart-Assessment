@@ -2,63 +2,164 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Biblical Musical Chairs Heart Assessment</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblical Musical Chairs – Heart Test</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <header class="page-header">
+    <h1>Biblical Musical Chairs – Heart Test</h1>
+    <p class="subtitle">
+      “Search me, O God, and know my heart…” — Psalm 139:23
+    </p>
+    <p class="instructions">
+      Select <strong>exactly 8</strong> items that most capture your heart. Then rate each from <strong>1–20</strong>.
+    </p>
+  </header>
 
-    <h1>Biblical Musical Chairs Heart Assessment</h1>
+  <main>
+    <section id="selection-section" class="card">
+      <h2>Step 1 – Choose Your 8</h2>
+      <p class="helper-text">
+        Check up to 8 items across all categories. The counter will show how many you’ve selected.
+      </p>
+      <p id="selected-count" class="selected-count">Selected: 0 / 8</p>
 
-    <!-- STEP 1: SELECT ITEMS -->
-    <section id="step1">
-      <h2>Step 1: Select Exactly 8 Items</h2>
-      <p>Select the 8 things that matter most to you right now.</p>
-      <p class="counter" id="selectionCounter">Selected: 0 / 8</p>
+      <!-- BELIEFS -->
+      <section class="category">
+        <h3>BELIEFS</h3>
+        <div class="category-grid">
+          <label><input type="checkbox" class="heart-item" data-key="Religion"> Religion</label>
+          <label><input type="checkbox" class="heart-item" data-key="Culture"> Culture</label>
+          <label><input type="checkbox" class="heart-item" data-key="Science"> Science</label>
+          <label><input type="checkbox" class="heart-item" data-key="Bible"> Bible</label>
+          <label><input type="checkbox" class="heart-item" data-key="GodJesusHolySpirit"> God / Jesus / Holy Spirit</label>
+          <label><input type="checkbox" class="heart-item" data-key="Evangelism"> Evangelism</label>
+          <label><input type="checkbox" class="heart-item" data-key="PreachingTeaching"> Preaching / Teaching</label>
+          <label><input type="checkbox" class="heart-item" data-key="Church"> Church</label>
+          <label><input type="checkbox" class="heart-item" data-key="ChurchFamily"> Church Family</label>
+          <label><input type="checkbox" class="heart-item" data-key="CaringforOthers"> Caring for Others</label>
+          <label><input type="checkbox" class="heart-item" data-key="Prayer"> Prayer</label>
+          <label><input type="checkbox" class="heart-item" data-key="PrayingforOthers"> Praying for Others</label>
+          <label><input type="checkbox" class="heart-item" data-key="MiraclesSignsWonders"> Miracles, Signs, Wonders</label>
+          <label><input type="checkbox" class="heart-item" data-key="WorshipPraise"> Worship / Praise</label>
+        </div>
+      </section>
 
-      <div id="checkboxList" class="checkbox-list">
-        <!-- Checkboxes will be injected by script.js -->
-      </div>
+      <!-- COLLECTIONS -->
+      <section class="category">
+        <h3>COLLECTIONS</h3>
+        <div class="category-grid">
+          <label><input type="checkbox" class="heart-item" data-key="Money"> Money</label>
+          <label><input type="checkbox" class="heart-item" data-key="Heirlooms"> Heirlooms</label>
+          <label><input type="checkbox" class="heart-item" data-key="Souvenirs"> Souvenirs</label>
+          <label><input type="checkbox" class="heart-item" data-key="Antiques"> Antiques</label>
+          <label><input type="checkbox" class="heart-item" data-key="Watches"> Watches</label>
+          <label><input type="checkbox" class="heart-item" data-key="Shoes"> Shoes</label>
+          <label><input type="checkbox" class="heart-item" data-key="Hats"> Hats</label>
+          <label><input type="checkbox" class="heart-item" data-key="Clothes"> Clothes</label>
+          <label><input type="checkbox" class="heart-item" data-key="Toys"> Toys</label>
+          <label><input type="checkbox" class="heart-item" data-key="Jewelry"> Jewelry</label>
+          <label><input type="checkbox" class="heart-item" data-key="Art"> Art</label>
+          <label><input type="checkbox" class="heart-item" data-key="ComicBooks"> Comic Books</label>
+          <label><input type="checkbox" class="heart-item" data-key="TradingCards"> Trading Cards</label>
+          <label><input type="checkbox" class="heart-item" data-key="ActionFigures"> Action Figures</label>
+          <label><input type="checkbox" class="heart-item" data-key="RocksCrystals"> Rocks / Crystals</label>
+          <label><input type="checkbox" class="heart-item" data-key="Coins"> Coins</label>
+        </div>
+      </section>
 
-      <div class="buttons">
-        <button id="toStep2">Continue</button>
-      </div>
-    </section>
+      <!-- EXERCISE -->
+      <section class="category">
+        <h3>EXERCISE</h3>
+        <div class="category-grid">
+          <label><input type="checkbox" class="heart-item" data-key="Walking"> Walking</label>
+          <label><input type="checkbox" class="heart-item" data-key="Running"> Running</label>
+          <label><input type="checkbox" class="heart-item" data-key="LiftingWeights"> Lifting Weights</label>
+          <label><input type="checkbox" class="heart-item" data-key="Crossfit"> Crossfit</label>
+          <label><input type="checkbox" class="heart-item" data-key="GymTime"> Gym Time</label>
+          <label><input type="checkbox" class="heart-item" data-key="Yoga"> Yoga</label>
+        </div>
+      </section>
 
-    <!-- STEP 2: RATE ITEMS -->
-    <section id="step2" class="hidden">
-      <h2>Step 2: Rate Your 8 Selected Items</h2>
-      <p>Rate each item from 1 (least important) to 10 (most important).</p>
+      <!-- HOME RELATED -->
+      <section class="category">
+        <h3>HOME RELATED</h3>
+        <div class="category-grid">
+          <label><input type="checkbox" class="heart-item" data-key="AloneTime"> Alone Time</label>
+          <label><input type="checkbox" class="heart-item" data-key="BeingHome"> Being Home</label>
+          <label><input type="checkbox" class="heart-item" data-key="TravelingLocal"> Traveling (local)</label>
+          <label><input type="checkbox" class="heart-item" data-key="Holidays"> Holidays</label>
+          <label><input type="checkbox" class="heart-item" data-key="FamilyTime"> Family Time</label>
+          <label><input type="checkbox" class="heart-item" data-key="SleepingNapping"> Sleeping / Napping</label>
+        </div>
+      </section>
 
-      <div id="ratingsContainer" class="ratings-container">
-        <!-- Rating inputs will be injected by script.js -->
-      </div>
+      <!-- INDOOR ACTIVITIES -->
+      <section class="category">
+        <h3>INDOOR ACTIVITIES</h3>
+        <div class="category-grid two-column">
+          <label><input type="checkbox" class="heart-item" data-key="Puzzles"> Puzzles</label>
+          <label><input type="checkbox" class="heart-item" data-key="Reading"> Reading</label>
+          <label><input type="checkbox" class="heart-item" data-key="Writing"> Writing</label>
+          <label><input type="checkbox" class="heart-item" data-key="Journaling"> Journaling</label>
+          <label><input type="checkbox" class="heart-item" data-key="Movies"> Movies</label>
+          <label><input type="checkbox" class="heart-item" data-key="ProducingMusic"> Producing Music</label>
+          <label><input type="checkbox" class="heart-item" data-key="WatchingTV"> Watching TV</label>
+          <label><input type="checkbox" class="heart-item" data-key="VideoGames"> Video Games</label>
+          <label><input type="checkbox" class="heart-item" data-key="BoardCardGames"> Board / Card Games</label>
+          <label><input type="checkbox" class="heart-item" data-key="Sewing"> Sewing</label>
+          <label><input type="checkbox" class="heart-item" data-key="Eating"> Eating</label>
+          <label><input type="checkbox" class="heart-item" data-key="CookingBaking"> Cooking / Baking</label>
+          <label><input type="checkbox" class="heart-item" data-key="Drawing"> Drawing</label>
+          <label><input type="checkbox" class="heart-item" data-key="Crafting"> Crafting</label>
+          <label><input type="checkbox" class="heart-item" data-key="DigitalCreator"> Digital Creator</label>
+          <label><input type="checkbox" class="heart-item" data-key="Sculpting"> Sculpting</label>
+          <label><input type="checkbox" class="heart-item" data-key="Woodworking"> Woodworking</label>
+          <label><input type="checkbox" class="heart-item" data-key="Acting"> Acting</label>
+          <label><input type="checkbox" class="heart-item" data-key="PlayingMusic"> Playing Music</label>
+          <label><input type="checkbox" class="heart-item" data-key="DateNights"> Date Nights</label>
+          <label><input type="checkbox" class="heart-item" data-key="Dancing"> Dancing</label>
+          <label><input type="checkbox" class="heart-item" data-key="SingingKaraoke"> Singing / Karaoke</label>
+        </div>
+      </section>
 
-      <div class="buttons">
-        <button id="backToStep1">Back</button>
-        <button id="toStep3">Calculate</button>
-      </div>
-    </section>
+      <!-- OCCUPATION -->
+      <section class="category">
+        <h3>OCCUPATION</h3>
+        <div class="category-grid">
+          <label><input type="checkbox" class="heart-item" data-key="WorkJob"> Work / Job</label>
+          <label><input type="checkbox" class="heart-item" data-key="Volunteering"> Volunteering</label>
+          <label><input type="checkbox" class="heart-item" data-key="Leading"> Leading</label>
+          <label><input type="checkbox" class="heart-item" data-key="Following"> Following</label>
+          <label><input type="checkbox" class="heart-item" data-key="Supervising"> Supervising</label>
+          <label><input type="checkbox" class="heart-item" data-key="Mentoring"> Mentoring</label>
+        </div>
+      </section>
 
-    <!-- STEP 3: RESULTS -->
-    <section id="step3" class="hidden">
-      <h2>Results</h2>
+      <!-- OTHER -->
+      <section class="category">
+        <h3>OTHER</h3>
+        <div class="category-grid">
+          <label><input type="checkbox" class="heart-item" data-key="Beer"> Beer</label>
+          <label><input type="checkbox" class="heart-item" data-key="Liquor"> Liquor</label>
+          <label><input type="checkbox" class="heart-item" data-key="Alcohol"> Alcohol</label>
+          <label><input type="checkbox" class="heart-item" data-key="Smoking"> Smoking</label>
+          <label><input type="checkbox" class="heart-item" data-key="Vaping"> Vaping</label>
+        </div>
+      </section>
 
-      <div id="resultsNarrative" class="results-box">
-        <!-- Narrative will be injected by script.js -->
-      </div>
-
-      <div class="buttons">
-        <a href="Biblical Musical Chairs Heart Assessment.pdf" download class="btn-link">
-          Download PDF Version
-        </a>
-        <button id="startOver">Start Over</button>
-      </div>
-    </section>
-
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+      <!-- OUTDOOR ACTIVITIES -->
+      <section class="category">
+        <h3>OUTDOOR ACTIVITIES</h3>
+        <div class="category-grid two-column">
+          <label><input type="checkbox" class="heart-item" data-key="Gardening"> Gardening</label>
+          <label><input type="checkbox" class="heart-item" data-key="Lawncare"> Lawn care</label>
+          <label><input type="checkbox" class="heart-item" data-key="Driving"> Driving</label>
+          <label><input type="checkbox" class="heart-item" data-key="Racing"> Racing</label>
+          <label><input type="checkbox" class="heart-item" data-key="Cornhole"> Cornhole</label>
+          <label><input type="checkbox" class="heart-item" data-key="Horseshoes"> Horseshoes</label>
+          <label><input type="checkbox" class="heart-item" data-key="ScubaDiving"> Scuba Diving</label>
+          <label><input type="checkbox" class="heart-item" data-key="Shopping"> Shopping</label>
+          <label><input type="checkbox" class="heart-item" data-key="BikeRiding"> Bike Riding</label>
+          <label><input type="checkbox" class="heart-item" data-key="Surfing"> Surfing</label>
+          <label>
