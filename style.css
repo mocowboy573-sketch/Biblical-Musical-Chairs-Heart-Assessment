@@ -63,6 +63,12 @@ button:hover{ filter:brightness(1.05) }
   font-weight:600;
 }
 
+.rating-instruction{
+  margin:8px 0 14px 0;
+  color:#e8e8e2;
+  font-style:italic;
+}
+
 /* responsive */
 @media (max-width:700px){
   .item-list{ columns:1 }
