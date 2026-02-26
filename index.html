@@ -1,165 +1,648 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Biblical Musical Chairs – Heart Test</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Values & Priorities — Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf6ef;
+    --card:#fffaf0;
+    --accent:#b8860b; /* goldenrod */
+    --muted:#6b6b6b;
+    --border:rgba(184,134,11,0.12);
+    --shadow: 0 6px 18px rgba(0,0,0,0.06);
+    --radius:10px;
+    --max-width:1100px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+  body{
+    background: linear-gradient(180deg, var(--bg) 0%, #fff 100%);
+    color:#222;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:28px;
+    display:flex;
+    justify-content:center;
+  }
+  .container{
+    width:100%;
+    max-width:var(--max-width);
+  }
+  header{
+    background:linear-gradient(90deg, rgba(184,134,11,0.06), rgba(184,134,11,0.02));
+    border:1px solid var(--border);
+    padding:18px 22px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-bottom:18px;
+  }
+  .logo{
+    width:64px;height:64px;border-radius:8px;
+    background:linear-gradient(135deg,#fffaf0,#fff);
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid rgba(184,134,11,0.12);
+    box-shadow:0 4px 10px rgba(184,134,11,0.06) inset;
+    font-family:Merriweather,serif;
+    color:var(--accent);
+    font-weight:700;
+    font-size:20px;
+  }
+  header h1{margin:0;font-family:Merriweather,serif;font-size:20px;color:#2b2b2b;}
+  header p{margin:0;color:var(--muted);font-size:13px;}
+  .verse{
+    margin-top:10px;color:#4b4b4b;font-style:italic;font-size:13px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:18px;
+    align-items:start;
+  }
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px;
+    box-shadow:var(--shadow);
+  }
+
+  .categories{
+    display:grid;
+    gap:12px;
+  }
+
+  .category{
+    border-radius:8px;
+    padding:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,250,240,0.6));
+    border:1px solid rgba(0,0,0,0.03);
+  }
+  .category h3{
+    margin:0 0 8px 0;
+    font-family:Merriweather,serif;
+    color:var(--accent);
+    font-size:16px;
+  }
+
+  .items{
+    display:grid;
+    gap:8px;
+  }
+
+  /* two-column layout for large categories */
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .item{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:6px 8px;
+    border-radius:6px;
+  }
+  .item input[type="checkbox"]{width:18px;height:18px;}
+  .item label{font-size:14px;color:#222;}
+  .rating{
+    margin-left:auto;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    color:var(--muted);
+    font-size:13px;
+  }
+  .rating input[type="number"]{
+    width:56px;padding:6px;border-radius:6px;border:1px solid var(--border);text-align:center;
+    font-size:13px;background:#fff;
+  }
+
+  .controls{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+    align-items:center;
+  }
+  .btn{
+    background:linear-gradient(180deg,var(--accent),#8f6f03);
+    color:white;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600;
+    box-shadow:0 6px 18px rgba(184,134,11,0.12);
+  }
+  .btn.secondary{
+    background:transparent;color:var(--accent);border:1px solid var(--border);font-weight:600;
+  }
+  .note{color:var(--muted);font-size:13px;margin-top:8px;}
+
+  /* results column */
+  .results{
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .summary{
+    padding:12px;border-radius:8px;background:linear-gradient(180deg,#fff,#fffaf0);
+    border:1px solid var(--border);
+  }
+  .top-list{display:flex;flex-direction:column;gap:8px;}
+  .top-item{
+    padding:10px;border-radius:8px;background:#fff;border:1px solid rgba(0,0,0,0.03);
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .badge{min-width:36px;height:36px;border-radius:6px;background:linear-gradient(180deg,var(--accent),#8f6f03);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;}
+  .meta{flex:1;}
+  .meta h4{margin:0;font-size:15px;font-weight:700;font-family:Merriweather,serif;color:#2b2b2b;}
+  .meta p{margin:6px 0 0 0;color:var(--muted);font-size:13px;}
+  .scripture{font-style:italic;color:#3b3b3b;font-size:13px;margin-top:8px;background:linear-gradient(90deg, rgba(184,134,11,0.03), transparent);padding:8px;border-radius:6px;border:1px solid rgba(184,134,11,0.04);}
+
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px;}
+  @media (max-width:980px){
+    .grid{grid-template-columns:1fr;}
+    .results{order:2}
+  }
+</style>
 </head>
 <body>
-  <header class="page-header">
-    <h1>Biblical Musical Chairs – Heart Test</h1>
-    <p class="subtitle">
-      “Search me, O God, and know my heart…” — Psalm 139:23
-    </p>
-    <p class="instructions">
-      Select <strong>exactly 8</strong> items that most capture your heart. Then rate each from <strong>1–20</strong>.
-    </p>
-  </header>
+  <div class="container" role="main">
+    <header>
+      <div class="logo">Faith</div>
+      <div>
+        <h1>Values & Priorities Assessment</h1>
+        <p>Rate what shapes your heart and life. Select exactly <strong>8</strong> items, then rate each 1–20.</p>
+        <div class="verse">“Search me, O God, and know my heart.” — Psalm 139:23</div>
+      </div>
+    </header>
 
-  <main>
-    <section id="selection-section" class="card">
-      <h2>Step 1 – Choose Your 8</h2>
-      <p class="helper-text">
-        Check up to 8 items across all categories. The counter will show how many you’ve selected.
-      </p>
-      <p id="selected-count" class="selected-count">Selected: 0 / 8</p>
+    <div class="grid">
+      <section class="panel">
+        <div class="categories" id="categories">
 
-      <!-- BELIEFS -->
-      <section class="category">
-        <h3>BELIEFS</h3>
-        <div class="category-grid">
-          <label><input type="checkbox" class="heart-item" data-key="Religion"> Religion</label>
-          <label><input type="checkbox" class="heart-item" data-key="Culture"> Culture</label>
-          <label><input type="checkbox" class="heart-item" data-key="Science"> Science</label>
-          <label><input type="checkbox" class="heart-item" data-key="Bible"> Bible</label>
-          <label><input type="checkbox" class="heart-item" data-key="GodJesusHolySpirit"> God / Jesus / Holy Spirit</label>
-          <label><input type="checkbox" class="heart-item" data-key="Evangelism"> Evangelism</label>
-          <label><input type="checkbox" class="heart-item" data-key="PreachingTeaching"> Preaching / Teaching</label>
-          <label><input type="checkbox" class="heart-item" data-key="Church"> Church</label>
-          <label><input type="checkbox" class="heart-item" data-key="ChurchFamily"> Church Family</label>
-          <label><input type="checkbox" class="heart-item" data-key="CaringforOthers"> Caring for Others</label>
-          <label><input type="checkbox" class="heart-item" data-key="Prayer"> Prayer</label>
-          <label><input type="checkbox" class="heart-item" data-key="PrayingforOthers"> Praying for Others</label>
-          <label><input type="checkbox" class="heart-item" data-key="MiraclesSignsWonders"> Miracles, Signs, Wonders</label>
-          <label><input type="checkbox" class="heart-item" data-key="WorshipPraise"> Worship / Praise</label>
+          <!-- BELIEFS -->
+          <div class="category" data-name="BELIEFS">
+            <h3>BELIEFS</h3>
+            <div class="items two-col">
+              <div>
+                <div class="item"><input type="checkbox" id="chk_Religion" data-field="Religion"><label for="chk_Religion">Religion</label><div class="rating"><input type="number" id="rate_Religion" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Culture" data-field="Culture"><label for="chk_Culture">Culture</label><div class="rating"><input type="number" id="rate_Culture" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Science" data-field="Science"><label for="chk_Science">Science</label><div class="rating"><input type="number" id="rate_Science" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Bible" data-field="Bible"><label for="chk_Bible">Bible</label><div class="rating"><input type="number" id="rate_Bible" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_GodJesusHolySpirit" data-field="GodJesusHolySpirit"><label for="chk_GodJesusHolySpirit">God / Jesus / Holy Spirit</label><div class="rating"><input type="number" id="rate_GodJesusHolySpirit" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Evangelism" data-field="Evangelism"><label for="chk_Evangelism">Evangelism</label><div class="rating"><input type="number" id="rate_Evangelism" min="1" max="20" value="10" disabled></div></div>
+              </div>
+              <div>
+                <div class="item"><input type="checkbox" id="chk_PreachingTeaching" data-field="PreachingTeaching"><label for="chk_PreachingTeaching">Preaching / Teaching</label><div class="rating"><input type="number" id="rate_PreachingTeaching" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Church" data-field="Church"><label for="chk_Church">Church</label><div class="rating"><input type="number" id="rate_Church" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_ChurchFamily" data-field="ChurchFamily"><label for="chk_ChurchFamily">Church Family</label><div class="rating"><input type="number" id="rate_ChurchFamily" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_CaringforOthers" data-field="CaringforOthers"><label for="chk_CaringforOthers">Caring for Others</label><div class="rating"><input type="number" id="rate_CaringforOthers" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Prayer" data-field="Prayer"><label for="chk_Prayer">Prayer</label><div class="rating"><input type="number" id="rate_Prayer" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_PrayingforOthers" data-field="PrayingforOthers"><label for="chk_PrayingforOthers">Praying for Others</label><div class="rating"><input type="number" id="rate_PrayingforOthers" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_MiraclesSignsWonders" data-field="MiraclesSignsWonders"><label for="chk_MiraclesSignsWonders">Miracles, Signs, Wonders</label><div class="rating"><input type="number" id="rate_MiraclesSignsWonders" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_WorshipPraise" data-field="WorshipPraise"><label for="chk_WorshipPraise">Worship / Praise</label><div class="rating"><input type="number" id="rate_WorshipPraise" min="1" max="20" value="10" disabled></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLLECTIONS -->
+          <div class="category" data-name="COLLECTIONS">
+            <h3>COLLECTIONS</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Cars" data-field="Cars"><label for="chk_Cars">Cars</label><div class="rating"><input type="number" id="rate_Cars" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Collecting" data-field="Collecting"><label for="chk_Collecting">Collecting</label><div class="rating"><input type="number" id="rate_Collecting" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Art" data-field="Art"><label for="chk_Art">Art</label><div class="rating"><input type="number" id="rate_Art" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Antiques" data-field="Antiques"><label for="chk_Antiques">Antiques</label><div class="rating"><input type="number" id="rate_Antiques" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- EXERCISE -->
+          <div class="category" data-name="EXERCISE">
+            <h3>EXERCISE</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Walking" data-field="Walking"><label for="chk_Walking">Walking</label><div class="rating"><input type="number" id="rate_Walking" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Running" data-field="Running"><label for="chk_Running">Running</label><div class="rating"><input type="number" id="rate_Running" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_LiftingWeights" data-field="LiftingWeights"><label for="chk_LiftingWeights">Lifting Weights</label><div class="rating"><input type="number" id="rate_LiftingWeights" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Crossfit" data-field="Crossfit"><label for="chk_Crossfit">Crossfit</label><div class="rating"><input type="number" id="rate_Crossfit" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_GymTime" data-field="GymTime"><label for="chk_GymTime">Gym Time</label><div class="rating"><input type="number" id="rate_GymTime" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Yoga" data-field="Yoga"><label for="chk_Yoga">Yoga</label><div class="rating"><input type="number" id="rate_Yoga" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- HOME RELATED -->
+          <div class="category" data-name="HOME RELATED">
+            <h3>HOME RELATED</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_AloneTime" data-field="AloneTime"><label for="chk_AloneTime">Alone Time</label><div class="rating"><input type="number" id="rate_AloneTime" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_BeingHome" data-field="BeingHome"><label for="chk_BeingHome">Being Home</label><div class="rating"><input type="number" id="rate_BeingHome" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_TravelingLocal" data-field="TravelingLocal"><label for="chk_TravelingLocal">Traveling (local)</label><div class="rating"><input type="number" id="rate_TravelingLocal" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Holidays" data-field="Holidays"><label for="chk_Holidays">Holidays</label><div class="rating"><input type="number" id="rate_Holidays" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_FamilyTime" data-field="FamilyTime"><label for="chk_FamilyTime">Family Time</label><div class="rating"><input type="number" id="rate_FamilyTime" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_SleepingNapping" data-field="SleepingNapping"><label for="chk_SleepingNapping">Sleeping / Napping</label><div class="rating"><input type="number" id="rate_SleepingNapping" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- INDOOR ACTIVITIES -->
+          <div class="category" data-name="INDOOR ACTIVITIES">
+            <h3>INDOOR ACTIVITIES</h3>
+            <div class="items two-col">
+              <div>
+                <div class="item"><input type="checkbox" id="chk_Puzzles" data-field="Puzzles"><label for="chk_Puzzles">Puzzles</label><div class="rating"><input type="number" id="rate_Puzzles" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Reading" data-field="Reading"><label for="chk_Reading">Reading</label><div class="rating"><input type="number" id="rate_Reading" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Writing" data-field="Writing"><label for="chk_Writing">Writing</label><div class="rating"><input type="number" id="rate_Writing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Journaling" data-field="Journaling"><label for="chk_Journaling">Journaling</label><div class="rating"><input type="number" id="rate_Journaling" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Movies" data-field="Movies"><label for="chk_Movies">Movies</label><div class="rating"><input type="number" id="rate_Movies" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_ProducingMusic" data-field="ProducingMusic"><label for="chk_ProducingMusic">Producing Music</label><div class="rating"><input type="number" id="rate_ProducingMusic" min="1" max="20" value="10" disabled></div></div>
+              </div>
+              <div>
+                <div class="item"><input type="checkbox" id="chk_WatchingTV" data-field="WatchingTV"><label for="chk_WatchingTV">Watching TV</label><div class="rating"><input type="number" id="rate_WatchingTV" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_VideoGames" data-field="VideoGames"><label for="chk_VideoGames">Video Games</label><div class="rating"><input type="number" id="rate_VideoGames" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_BoardCardGames" data-field="BoardCardGames"><label for="chk_BoardCardGames">Board / Card Games</label><div class="rating"><input type="number" id="rate_BoardCardGames" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Sewing" data-field="Sewing"><label for="chk_Sewing">Sewing</label><div class="rating"><input type="number" id="rate_Sewing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Eating" data-field="Eating"><label for="chk_Eating">Eating</label><div class="rating"><input type="number" id="rate_Eating" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_CookingBaking" data-field="CookingBaking"><label for="chk_CookingBaking">Cooking / Baking</label><div class="rating"><input type="number" id="rate_CookingBaking" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Drawing" data-field="Drawing"><label for="chk_Drawing">Drawing</label><div class="rating"><input type="number" id="rate_Drawing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Crafting" data-field="Crafting"><label for="chk_Crafting">Crafting</label><div class="rating"><input type="number" id="rate_Crafting" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_DigitalCreator" data-field="DigitalCreator"><label for="chk_DigitalCreator">Digital Creator</label><div class="rating"><input type="number" id="rate_DigitalCreator" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Sculpting" data-field="Sculpting"><label for="chk_Sculpting">Sculpting</label><div class="rating"><input type="number" id="rate_Sculpting" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Woodworking" data-field="Woodworking"><label for="chk_Woodworking">Woodworking</label><div class="rating"><input type="number" id="rate_Woodworking" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Acting" data-field="Acting"><label for="chk_Acting">Acting</label><div class="rating"><input type="number" id="rate_Acting" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_PlayingMusic" data-field="PlayingMusic"><label for="chk_PlayingMusic">Playing Music</label><div class="rating"><input type="number" id="rate_PlayingMusic" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_DateNights" data-field="DateNights"><label for="chk_DateNights">Date Nights</label><div class="rating"><input type="number" id="rate_DateNights" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Dancing" data-field="Dancing"><label for="chk_Dancing">Dancing</label><div class="rating"><input type="number" id="rate_Dancing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_SingingKaraoke" data-field="SingingKaraoke"><label for="chk_SingingKaraoke">Singing / Karaoke</label><div class="rating"><input type="number" id="rate_SingingKaraoke" min="1" max="20" value="10" disabled></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OCCUPATION -->
+          <div class="category" data-name="OCCUPATION">
+            <h3>OCCUPATION</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_WorkJob" data-field="WorkJob"><label for="chk_WorkJob">Work / Job</label><div class="rating"><input type="number" id="rate_WorkJob" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Volunteering" data-field="Volunteering"><label for="chk_Volunteering">Volunteering</label><div class="rating"><input type="number" id="rate_Volunteering" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Leading" data-field="Leading"><label for="chk_Leading">Leading</label><div class="rating"><input type="number" id="rate_Leading" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Following" data-field="Following"><label for="chk_Following">Following</label><div class="rating"><input type="number" id="rate_Following" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Supervising" data-field="Supervising"><label for="chk_Supervising">Supervising</label><div class="rating"><input type="number" id="rate_Supervising" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Mentoring" data-field="Mentoring"><label for="chk_Mentoring">Mentoring</label><div class="rating"><input type="number" id="rate_Mentoring" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- OTHER -->
+          <div class="category" data-name="OTHER">
+            <h3>OTHER</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Beer" data-field="Beer"><label for="chk_Beer">Beer</label><div class="rating"><input type="number" id="rate_Beer" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Liquor" data-field="Liquor"><label for="chk_Liquor">Liquor</label><div class="rating"><input type="number" id="rate_Liquor" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Alcohol" data-field="Alcohol"><label for="chk_Alcohol">Alcohol</label><div class="rating"><input type="number" id="rate_Alcohol" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Smoking" data-field="Smoking"><label for="chk_Smoking">Smoking</label><div class="rating"><input type="number" id="rate_Smoking" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Vaping" data-field="Vaping"><label for="chk_Vaping">Vaping</label><div class="rating"><input type="number" id="rate_Vaping" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- OUTDOOR ACTIVITIES -->
+          <div class="category" data-name="OUTDOOR ACTIVITIES">
+            <h3>OUTDOOR ACTIVITIES</h3>
+            <div class="items two-col">
+              <div>
+                <div class="item"><input type="checkbox" id="chk_Gardening" data-field="Gardening"><label for="chk_Gardening">Gardening</label><div class="rating"><input type="number" id="rate_Gardening" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Lawncare" data-field="Lawncare"><label for="chk_Lawncare">Lawn care</label><div class="rating"><input type="number" id="rate_Lawncare" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Driving" data-field="Driving"><label for="chk_Driving">Driving</label><div class="rating"><input type="number" id="rate_Driving" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Racing" data-field="Racing"><label for="chk_Racing">Racing</label><div class="rating"><input type="number" id="rate_Racing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Cornhole" data-field="Cornhole"><label for="chk_Cornhole">Cornhole</label><div class="rating"><input type="number" id="rate_Cornhole" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Horseshoes" data-field="Horseshoes"><label for="chk_Horseshoes">Horseshoes</label><div class="rating"><input type="number" id="rate_Horseshoes" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_ScubaDiving" data-field="ScubaDiving"><label for="chk_ScubaDiving">Scuba Diving</label><div class="rating"><input type="number" id="rate_ScubaDiving" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Shopping" data-field="Shopping"><label for="chk_Shopping">Shopping</label><div class="rating"><input type="number" id="rate_Shopping" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_BikeRiding" data-field="BikeRiding"><label for="chk_BikeRiding">Bike Riding</label><div class="rating"><input type="number" id="rate_BikeRiding" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Surfing" data-field="Surfing"><label for="chk_Surfing">Surfing</label><div class="rating"><input type="number" id="rate_Surfing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Hunting" data-field="Hunting"><label for="chk_Hunting">Hunting</label><div class="rating"><input type="number" id="rate_Hunting" min="1" max="20" value="10" disabled></div></div>
+              </div>
+              <div>
+                <div class="item"><input type="checkbox" id="chk_BeachLife" data-field="BeachLife"><label for="chk_BeachLife">Beach Life</label><div class="rating"><input type="number" id="rate_BeachLife" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Tanning" data-field="Tanning"><label for="chk_Tanning">Tanning</label><div class="rating"><input type="number" id="rate_Tanning" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Birdwatching" data-field="Birdwatching"><label for="chk_Birdwatching">Birdwatching</label><div class="rating"><input type="number" id="rate_Birdwatching" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Paintball" data-field="Paintball"><label for="chk_Paintball">Paintball</label><div class="rating"><input type="number" id="rate_Paintball" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Archery" data-field="Archery"><label for="chk_Archery">Archery</label><div class="rating"><input type="number" id="rate_Archery" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Photography" data-field="Photography"><label for="chk_Photography">Photography</label><div class="rating"><input type="number" id="rate_Photography" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_OffRoading" data-field="OffRoading"><label for="chk_OffRoading">Off-roading</label><div class="rating"><input type="number" id="rate_OffRoading" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Mudding" data-field="Mudding"><label for="chk_Mudding">Mudding</label><div class="rating"><input type="number" id="rate_Mudding" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Camping" data-field="Camping"><label for="chk_Camping">Camping</label><div class="rating"><input type="number" id="rate_Camping" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Fishing" data-field="Fishing"><label for="chk_Fishing">Fishing</label><div class="rating"><input type="number" id="rate_Fishing" min="1" max="20" value="10" disabled></div></div>
+                <div class="item"><input type="checkbox" id="chk_Hiking" data-field="Hiking"><label for="chk_Hiking">Hiking</label><div class="rating"><input type="number" id="rate_Hiking" min="1" max="20" value="10" disabled></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PEOPLE -->
+          <div class="category" data-name="PEOPLE">
+            <h3>PEOPLE</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Friends" data-field="Friends"><label for="chk_Friends">Friends</label><div class="rating"><input type="number" id="rate_Friends" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Family" data-field="Family"><label for="chk_Family">Family</label><div class="rating"><input type="number" id="rate_Family" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Partner" data-field="Partner"><label for="chk_Partner">Partner</label><div class="rating"><input type="number" id="rate_Partner" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Children" data-field="Children"><label for="chk_Children">Children</label><div class="rating"><input type="number" id="rate_Children" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Pets" data-field="Pets"><label for="chk_Pets">Pets</label><div class="rating"><input type="number" id="rate_Pets" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Romance" data-field="Romance"><label for="chk_Romance">Romance</label><div class="rating"><input type="number" id="rate_Romance" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- SPORTS -->
+          <div class="category" data-name="SPORTS">
+            <h3>SPORTS</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Football" data-field="Football"><label for="chk_Football">Football</label><div class="rating"><input type="number" id="rate_Football" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Baseball" data-field="Baseball"><label for="chk_Baseball">Baseball</label><div class="rating"><input type="number" id="rate_Baseball" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Soccer" data-field="Soccer"><label for="chk_Soccer">Soccer</label><div class="rating"><input type="number" id="rate_Soccer" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Basketball" data-field="Basketball"><label for="chk_Basketball">Basketball</label><div class="rating"><input type="number" id="rate_Basketball" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Golf" data-field="Golf"><label for="chk_Golf">Golf</label><div class="rating"><input type="number" id="rate_Golf" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Tennis" data-field="Tennis"><label for="chk_Tennis">Tennis</label><div class="rating"><input type="number" id="rate_Tennis" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Pickleball" data-field="Pickleball"><label for="chk_Pickleball">Pickleball</label><div class="rating"><input type="number" id="rate_Pickleball" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_MartialArts" data-field="MartialArts"><label for="chk_MartialArts">Martial Arts</label><div class="rating"><input type="number" id="rate_MartialArts" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Bowling" data-field="Bowling"><label for="chk_Bowling">Bowling</label><div class="rating"><input type="number" id="rate_Bowling" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Skateboarding" data-field="Skateboarding"><label for="chk_Skateboarding">Skateboarding</label><div class="rating"><input type="number" id="rate_Skateboarding" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Swimming" data-field="Swimming"><label for="chk_Swimming">Swimming</label><div class="rating"><input type="number" id="rate_Swimming" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_OtherSport" data-field="OtherSport"><label for="chk_OtherSport">Other Sport</label><div class="rating"><input type="number" id="rate_OtherSport" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Gymnastics" data-field="Gymnastics"><label for="chk_Gymnastics">Gymnastics</label><div class="rating"><input type="number" id="rate_Gymnastics" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Volleyball" data-field="Volleyball"><label for="chk_Volleyball">Volleyball</label><div class="rating"><input type="number" id="rate_Volleyball" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- TRANSPORTATION -->
+          <div class="category" data-name="TRANSPORTATION">
+            <h3>TRANSPORTATION</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Cars" data-field="Cars"><label for="chk_Cars">Cars</label><div class="rating"><input type="number" id="rate_Cars2" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Trucks" data-field="Trucks"><label for="chk_Trucks">Trucks</label><div class="rating"><input type="number" id="rate_Trucks" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Motorcycles" data-field="Motorcycles"><label for="chk_Motorcycles">Motorcycles</label><div class="rating"><input type="number" id="rate_Motorcycles" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Dirtbikes" data-field="Dirtbikes"><label for="chk_Dirtbikes">Dirtbikes</label><div class="rating"><input type="number" id="rate_Dirtbikes" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_4Wheelers" data-field="4Wheelers"><label for="chk_4Wheelers">4-Wheelers</label><div class="rating"><input type="number" id="rate_4Wheelers" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Trains" data-field="Trains"><label for="chk_Trains">Trains</label><div class="rating"><input type="number" id="rate_Trains" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Planes" data-field="Planes"><label for="chk_Planes">Planes</label><div class="rating"><input type="number" id="rate_Planes" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
+          <!-- TRAVEL -->
+          <div class="category" data-name="TRAVEL">
+            <h3>TRAVEL</h3>
+            <div class="items">
+              <div class="item"><input type="checkbox" id="chk_Traveling" data-field="Traveling"><label for="chk_Traveling">Traveling</label><div class="rating"><input type="number" id="rate_Traveling" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Flying" data-field="Flying"><label for="chk_Flying">Flying</label><div class="rating"><input type="number" id="rate_Flying" min="1" max="20" value="10" disabled></div></div>
+              <div class="item"><input type="checkbox" id="chk_Cruises" data-field="Cruises"><label for="chk_Cruises">Cruises</label><div class="rating"><input type="number" id="rate_Cruises" min="1" max="20" value="10" disabled></div></div>
+            </div>
+          </div>
+
         </div>
+
+        <div class="controls">
+          <button class="btn" id="generateBtn">Generate Results</button>
+          <button class="btn secondary" id="resetBtn" type="button">Reset</button>
+          <div style="margin-left:auto;color:var(--muted);font-size:13px;">Selected: <span id="selectedCount">0</span>/8</div>
+        </div>
+        <div class="note">Tip: check an item to enable its rating. Ratings default to 10. Exactly 8 items must be selected to generate results.</div>
       </section>
 
-      <!-- COLLECTIONS -->
-      <section class="category">
-        <h3>COLLECTIONS</h3>
-        <div class="category-grid">
-          <label><input type="checkbox" class="heart-item" data-key="Money"> Money</label>
-          <label><input type="checkbox" class="heart-item" data-key="Heirlooms"> Heirlooms</label>
-          <label><input type="checkbox" class="heart-item" data-key="Souvenirs"> Souvenirs</label>
-          <label><input type="checkbox" class="heart-item" data-key="Antiques"> Antiques</label>
-          <label><input type="checkbox" class="heart-item" data-key="Watches"> Watches</label>
-          <label><input type="checkbox" class="heart-item" data-key="Shoes"> Shoes</label>
-          <label><input type="checkbox" class="heart-item" data-key="Hats"> Hats</label>
-          <label><input type="checkbox" class="heart-item" data-key="Clothes"> Clothes</label>
-          <label><input type="checkbox" class="heart-item" data-key="Toys"> Toys</label>
-          <label><input type="checkbox" class="heart-item" data-key="Jewelry"> Jewelry</label>
-          <label><input type="checkbox" class="heart-item" data-key="Art"> Art</label>
-          <label><input type="checkbox" class="heart-item" data-key="ComicBooks"> Comic Books</label>
-          <label><input type="checkbox" class="heart-item" data-key="TradingCards"> Trading Cards</label>
-          <label><input type="checkbox" class="heart-item" data-key="ActionFigures"> Action Figures</label>
-          <label><input type="checkbox" class="heart-item" data-key="RocksCrystals"> Rocks / Crystals</label>
-          <label><input type="checkbox" class="heart-item" data-key="Coins"> Coins</label>
+      <aside class="panel results" aria-live="polite">
+        <div class="summary">
+          <strong>Results</strong>
+          <div style="margin-top:8px;color:var(--muted);font-size:13px;">Top items will appear here after you select exactly 8 and click <strong>Generate Results</strong>.</div>
         </div>
-      </section>
 
-      <!-- EXERCISE -->
-      <section class="category">
-        <h3>EXERCISE</h3>
-        <div class="category-grid">
-          <label><input type="checkbox" class="heart-item" data-key="Walking"> Walking</label>
-          <label><input type="checkbox" class="heart-item" data-key="Running"> Running</label>
-          <label><input type="checkbox" class="heart-item" data-key="LiftingWeights"> Lifting Weights</label>
-          <label><input type="checkbox" class="heart-item" data-key="Crossfit"> Crossfit</label>
-          <label><input type="checkbox" class="heart-item" data-key="GymTime"> Gym Time</label>
-          <label><input type="checkbox" class="heart-item" data-key="Yoga"> Yoga</label>
+        <div id="topContainer"></div>
+
+        <div class="summary" id="reflectionBlock" style="display:none;">
+          <strong>Reflection</strong>
+          <div id="reflectionText" style="margin-top:8px;color:var(--muted);font-size:13px;"></div>
         </div>
-      </section>
 
-      <!-- HOME RELATED -->
-      <section class="category">
-        <h3>HOME RELATED</h3>
-        <div class="category-grid">
-          <label><input type="checkbox" class="heart-item" data-key="AloneTime"> Alone Time</label>
-          <label><input type="checkbox" class="heart-item" data-key="BeingHome"> Being Home</label>
-          <label><input type="checkbox" class="heart-item" data-key="TravelingLocal"> Traveling (local)</label>
-          <label><input type="checkbox" class="heart-item" data-key="Holidays"> Holidays</label>
-          <label><input type="checkbox" class="heart-item" data-key="FamilyTime"> Family Time</label>
-          <label><input type="checkbox" class="heart-item" data-key="SleepingNapping"> Sleeping / Napping</label>
+        <div class="summary" style="background:linear-gradient(90deg, rgba(184,134,11,0.03), transparent);">
+          <strong>Notes</strong>
+          <p style="margin:8px 0 0 0;color:var(--muted);font-size:13px;">Tie-breaker: if two items share the same score, **God / Jesus / Holy Spirit** is prioritized when present among tied items.</p>
         </div>
-      </section>
+      </aside>
+    </div>
 
-      <!-- INDOOR ACTIVITIES -->
-      <section class="category">
-        <h3>INDOOR ACTIVITIES</h3>
-        <div class="category-grid two-column">
-          <label><input type="checkbox" class="heart-item" data-key="Puzzles"> Puzzles</label>
-          <label><input type="checkbox" class="heart-item" data-key="Reading"> Reading</label>
-          <label><input type="checkbox" class="heart-item" data-key="Writing"> Writing</label>
-          <label><input type="checkbox" class="heart-item" data-key="Journaling"> Journaling</label>
-          <label><input type="checkbox" class="heart-item" data-key="Movies"> Movies</label>
-          <label><input type="checkbox" class="heart-item" data-key="ProducingMusic"> Producing Music</label>
-          <label><input type="checkbox" class="heart-item" data-key="WatchingTV"> Watching TV</label>
-          <label><input type="checkbox" class="heart-item" data-key="VideoGames"> Video Games</label>
-          <label><input type="checkbox" class="heart-item" data-key="BoardCardGames"> Board / Card Games</label>
-          <label><input type="checkbox" class="heart-item" data-key="Sewing"> Sewing</label>
-          <label><input type="checkbox" class="heart-item" data-key="Eating"> Eating</label>
-          <label><input type="checkbox" class="heart-item" data-key="CookingBaking"> Cooking / Baking</label>
-          <label><input type="checkbox" class="heart-item" data-key="Drawing"> Drawing</label>
-          <label><input type="checkbox" class="heart-item" data-key="Crafting"> Crafting</label>
-          <label><input type="checkbox" class="heart-item" data-key="DigitalCreator"> Digital Creator</label>
-          <label><input type="checkbox" class="heart-item" data-key="Sculpting"> Sculpting</label>
-          <label><input type="checkbox" class="heart-item" data-key="Woodworking"> Woodworking</label>
-          <label><input type="checkbox" class="heart-item" data-key="Acting"> Acting</label>
-          <label><input type="checkbox" class="heart-item" data-key="PlayingMusic"> Playing Music</label>
-          <label><input type="checkbox" class="heart-item" data-key="DateNights"> Date Nights</label>
-          <label><input type="checkbox" class="heart-item" data-key="Dancing"> Dancing</label>
-          <label><input type="checkbox" class="heart-item" data-key="SingingKaraoke"> Singing / Karaoke</label>
+    <footer>
+      Created to help you discern what shapes your heart.
+    </footer>
+  </div>
+
+<script>
+(function(){
+  const MAX_SELECT = 8;
+  const selectedCountEl = document.getElementById('selectedCount');
+  const generateBtn = document.getElementById('generateBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const topContainer = document.getElementById('topContainer');
+  const reflectionBlock = document.getElementById('reflectionBlock');
+  const reflectionText = document.getElementById('reflectionText');
+
+  // collect all checkbox inputs inside categories
+  const checkboxes = Array.from(document.querySelectorAll('#categories input[type="checkbox"]'));
+
+  // helper to find corresponding rating input id (rate_<field>)
+  function ratingInputFor(field){
+    // some duplicate field names (Cars) had two rate ids; prefer exact match first
+    const id = 'rate_' + field;
+    return document.getElementById(id) || document.querySelector('[id^="rate_' + field + '"]');
+  }
+
+  function updateSelectedCount(){
+    const count = checkboxes.filter(cb => cb.checked).length;
+    selectedCountEl.textContent = count;
+  }
+
+  // enable/disable rating when checkbox toggled
+  checkboxes.forEach(cb=>{
+    cb.addEventListener('change', (e)=>{
+      const field = cb.dataset.field;
+      const rateEl = ratingInputFor(field);
+      if(cb.checked){
+        // enforce max selection
+        const currently = checkboxes.filter(c=>c.checked).length;
+        if(currently > MAX_SELECT){
+          cb.checked = false;
+          // quick visual feedback
+          alert('You may select exactly ' + MAX_SELECT + ' items.');
+          return;
+        }
+        if(rateEl) rateEl.disabled = false;
+      } else {
+        if(rateEl){
+          rateEl.disabled = true;
+          rateEl.value = 10;
+        }
+      }
+      updateSelectedCount();
+    });
+  });
+
+  // reset
+  resetBtn.addEventListener('click', ()=>{
+    checkboxes.forEach(cb=>{
+      cb.checked = false;
+      const rateEl = ratingInputFor(cb.dataset.field);
+      if(rateEl){ rateEl.disabled = true; rateEl.value = 10; }
+    });
+    updateSelectedCount();
+    topContainer.innerHTML = '';
+    reflectionBlock.style.display = 'none';
+  });
+
+  // scripture mapping (concise, thematic)
+  const scriptureMap = {
+    'GodJesusHolySpirit': 'Matthew 22:37 — "Love the Lord your God with all your heart..."',
+    'Bible': '2 Timothy 3:16 — "All Scripture is God-breathed..."',
+    'Prayer': 'Philippians 4:6 — "Do not be anxious about anything; in every situation, by prayer..."',
+    'FamilyTime': 'Ephesians 6:1-4 — "Honor your father and mother..."',
+    'CaringforOthers': 'Galatians 6:2 — "Carry each other\'s burdens..."',
+    'WorshipPraise': 'Psalm 95:1 — "Come, let us sing for joy to the Lord..."',
+    'Evangelism': 'Matthew 28:19 — "Go and make disciples of all nations."',
+    'Church': 'Hebrews 10:24-25 — "Let us consider how we may spur one another on..."',
+    'WorkJob': 'Colossians 3:23 — "Whatever you do, work at it with all your heart..."',
+    'AloneTime': 'Mark 1:35 — "Very early in the morning, while it was still dark, Jesus got up..."',
+    'Gardening': 'Genesis 2:15 — "The Lord God took the man and put him in the Garden of Eden to work it and take care of it."',
+    'Fishing': 'Matthew 4:19 — "Follow me, and I will make you fishers of men."',
+    'Music': 'Psalm 150:1 — "Praise the Lord. Praise God in his sanctuary..."',
+    'PrayerforOthers': '1 Timothy 2:1 — "I urge, then, first of all, that petitions, prayers, intercession and thanksgiving be made for all people."'
+  };
+
+  // fallback scripture generator
+  function scriptureFor(name){
+    if(scriptureMap[name]) return scriptureMap[name];
+    // simple heuristics
+    if(/Prayer|Praying/i.test(name)) return scriptureMap['Prayer'];
+    if(/Church|Worship|Praise|Evangelism|Preaching/i.test(name)) return scriptureMap['Church'];
+    if(/Family|Children|Partner|Friends/i.test(name)) return scriptureMap['FamilyTime'];
+    if(/Work|Job|Mentor|Supervis/i.test(name)) return scriptureMap['WorkJob'];
+    if(/Garden|Camping|Fishing|Hiking|Beach/i.test(name)) return scriptureMap['Gardening'];
+    if(/Music|Singing|PlayingMusic|ProducingMusic/i.test(name)) return scriptureMap['Music'] || 'Psalm 150:1 — "Praise the Lord."';
+    return 'Psalm 37:4 — "Delight yourself in the Lord, and he will give you the desires of your heart."';
+  }
+
+  // reflection generator: short, actionable prompts
+  function reflectionFor(name, score){
+    const base = `You rated **${name}** ${score}/20.`;
+    if(name === 'GodJesusHolySpirit'){
+      return base + ' Consider how time in prayer, Scripture, and worship shapes your daily decisions. What next step will deepen that relationship?';
+    }
+    if(/Family|Children|Partner|Friends/i.test(name)){
+      return base + ' Who in your circle needs more of your presence this season? Schedule one intentional conversation this week.';
+    }
+    if(/Work|Job|Career|Supervis/i.test(name)){
+      return base + ' Reflect on whether your work aligns with your calling. What small change would increase meaning in your daily tasks?';
+    }
+    if(/Prayer|Bible|Church|Worship|Evangelism/i.test(name)){
+      return base + ' How can you make space this week to practice this more intentionally (time, place, accountability)?';
+    }
+    if(/Exercise|Walking|Running|Gym|Yoga/i.test(name)){
+      return base + ' A consistent, small habit is more sustainable than a big burst. What 15-minute habit could you start?';
+    }
+    if(/Alcohol|Beer|Liquor|Smoking|Vaping/i.test(name)){
+      return base + ' Notice how this influences your relationships and spiritual life. What boundary or support would help you align choices with values?';
+    }
+    if(/Gardening|Camping|Fishing|Hiking|Beach/i.test(name)){
+      return base + ' Time outdoors often restores perspective. Plan one short outdoor time this week to reflect and pray.';
+    }
+    return base + ' Consider one practical step to bring this value into clearer alignment with your faith and daily life.';
+  }
+
+  // main generate logic
+  generateBtn.addEventListener('click', ()=>{
+    const selected = checkboxes.filter(cb=>cb.checked).map(cb=>{
+      const field = cb.dataset.field;
+      const rateEl = ratingInputFor(field);
+      const score = rateEl ? Math.max(1, Math.min(20, Number(rateEl.value)||10)) : 10;
+      return {field, score};
+    });
+
+    if(selected.length !== MAX_SELECT){
+      alert('Please select exactly ' + MAX_SELECT + ' items before generating results. Currently selected: ' + selected.length + '.');
+      return;
+    }
+
+    // sort by score desc; tie-breaker: GodJesusHolySpirit prioritized
+    selected.sort((a,b)=>{
+      if(b.score !== a.score) return b.score - a.score;
+      // tie-breaker: if one is GodJesusHolySpirit, it wins
+      if(a.field === 'GodJesusHolySpirit') return 1;
+      if(b.field === 'GodJesusHolySpirit') return -1;
+      // otherwise stable alphabetical
+      return a.field.localeCompare(b.field);
+    });
+
+    // render top list (all selected, sorted)
+    topContainer.innerHTML = '';
+    selected.forEach((it, idx)=>{
+      const displayName = prettify(it.field);
+      const verse = scriptureFor(it.field);
+      const reflect = reflectionFor(displayName, it.score);
+      const itemEl = document.createElement('div');
+      itemEl.className = 'top-item';
+      itemEl.innerHTML = `
+        <div class="badge">${idx+1}</div>
+        <div class="meta">
+          <h4>${displayName} — ${it.score}/20</h4>
+          <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px;">Category: ${categoryOfField(it.field)}</p>
+          <div class="scripture">${verse}</div>
+          <p style="margin:8px 0 0 0;color:#333;font-size:13px;">${reflect}</p>
         </div>
-      </section>
+      `;
+      topContainer.appendChild(itemEl);
+    });
 
-      <!-- OCCUPATION -->
-      <section class="category">
-        <h3>OCCUPATION</h3>
-        <div class="category-grid">
-          <label><input type="checkbox" class="heart-item" data-key="WorkJob"> Work / Job</label>
-          <label><input type="checkbox" class="heart-item" data-key="Volunteering"> Volunteering</label>
-          <label><input type="checkbox" class="heart-item" data-key="Leading"> Leading</label>
-          <label><input type="checkbox" class="heart-item" data-key="Following"> Following</label>
-          <label><input type="checkbox" class="heart-item" data-key="Supervising"> Supervising</label>
-          <label><input type="checkbox" class="heart-item" data-key="Mentoring"> Mentoring</label>
-        </div>
-      </section>
+    // overall reflection: combine top 3 into a short paragraph
+    const topThree = selected.slice(0,3).map(s=>prettify(s.field) + ' (' + s.score + '/20)');
+    reflectionText.innerHTML = `Your top priorities are: <strong>${topThree.join(', ')}</strong>. Pray and ask God to clarify how these priorities should shape your time, relationships, and decisions this week. Consider one concrete step for each top priority.`;
+    reflectionBlock.style.display = 'block';
+    // scroll results into view on small screens
+    reflectionBlock.scrollIntoView({behavior:'smooth', block:'center'});
+  });
 
-      <!-- OTHER -->
-      <section class="category">
-        <h3>OTHER</h3>
-        <div class="category-grid">
-          <label><input type="checkbox" class="heart-item" data-key="Beer"> Beer</label>
-          <label><input type="checkbox" class="heart-item" data-key="Liquor"> Liquor</label>
-          <label><input type="checkbox" class="heart-item" data-key="Alcohol"> Alcohol</label>
-          <label><input type="checkbox" class="heart-item" data-key="Smoking"> Smoking</label>
-          <label><input type="checkbox" class="heart-item" data-key="Vaping"> Vaping</label>
-        </div>
-      </section>
+  // small helpers
+  function prettify(field){
+    // convert camelCase or concatenated names to readable labels
+    return field
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/_/g,' ')
+      .replace(/\b4Wheelers\b/,'4-Wheelers')
+      .replace(/\bGod Jesus Holy Spirit\b/,'God / Jesus / Holy Spirit')
+      .replace(/\bGodJesusHolySpirit\b/,'God / Jesus / Holy Spirit')
+      .replace(/\bBoardCardGames\b/,'Board / Card Games')
+      .replace(/\bCookingBaking\b/,'Cooking / Baking')
+      .replace(/\bPlayingMusic\b/,'Playing Music')
+      .replace(/\bWorshipPraise\b/,'Worship / Praise')
+      .replace(/\bMiraclesSignsWonders\b/,'Miracles, Signs, Wonders')
+      .replace(/\bTravelingLocal\b/,'Traveling (local)')
+      .replace(/\bDateNights\b/,'Date Nights')
+      .replace(/\bOtherSport\b/,'Other Sport')
+      .replace(/\b4 Wheelers\b/,'4-Wheelers')
+      .trim();
+  }
 
-      <!-- OUTDOOR ACTIVITIES -->
-      <section class="category">
-        <h3>OUTDOOR ACTIVITIES</h3>
-        <div class="category-grid two-column">
-          <label><input type="checkbox" class="heart-item" data-key="Gardening"> Gardening</label>
-          <label><input type="checkbox" class="heart-item" data-key="Lawncare"> Lawn care</label>
-          <label><input type="checkbox" class="heart-item" data-key="Driving"> Driving</label>
-          <label><input type="checkbox" class="heart-item" data-key="Racing"> Racing</label>
-          <label><input type="checkbox" class="heart-item" data-key="Cornhole"> Cornhole</label>
-          <label><input type="checkbox" class="heart-item" data-key="Horseshoes"> Horseshoes</label>
-          <label><input type="checkbox" class="heart-item" data-key="ScubaDiving"> Scuba Diving</label>
-          <label><input type="checkbox" class="heart-item" data-key="Shopping"> Shopping</label>
-          <label><input type="checkbox" class="heart-item" data-key="BikeRiding"> Bike Riding</label>
-          <label><input type="checkbox" class="heart-item" data-key="Surfing"> Surfing</label>
-          <label>
+  function categoryOfField(field){
+    // map a few fields to categories for display; otherwise unknown
+    const mapping = {
+      'Religion':'BELIEFS','Culture':'BELIEFS','Science':'BELIEFS','Bible':'BELIEFS','GodJesusHolySpirit':'BELIEFS',
+      'Walking':'EXERCISE','Running':'EXERCISE','LiftingWeights':'EXERCISE','Crossfit':'EXERCISE','GymTime':'EXERCISE','Yoga':'EXERCISE',
+      'AloneTime':'HOME RELATED','BeingHome':'HOME RELATED','TravelingLocal':'HOME RELATED','Holidays':'HOME RELATED','FamilyTime':'HOME RELATED','SleepingNapping':'HOME RELATED',
+      'Puzzles':'INDOOR ACTIVITIES','Reading':'INDOOR ACTIVITIES','Movies':'INDOOR ACTIVITIES','ProducingMusic':'INDOOR ACTIVITIES','VideoGames':'INDOOR ACTIVITIES',
+      'WorkJob':'OCCUPATION','Volunteering':'OCCUPATION','Leading':'OCCUPATION','Following':'OCCUPATION','Supervising':'OCCUPATION','Mentoring':'OCCUPATION',
+      'Beer':'OTHER','Liquor':'OTHER','Alcohol':'OTHER','Smoking':'OTHER','Vaping':'OTHER',
+      'Gardening':'OUTDOOR ACTIVITIES','Camping':'OUTDOOR ACTIVITIES','Fishing':'OUTDOOR ACTIVITIES','Hiking':'OUTDOOR ACTIVITIES','BeachLife':'OUTDOOR ACTIVITIES',
+      'Friends':'PEOPLE','Family':'PEOPLE','Partner':'PEOPLE','Children':'PEOPLE','Pets':'PEOPLE','Romance':'PEOPLE',
+      'Football':'SPORTS','Baseball':'SPORTS','Soccer':'SPORTS','Basketball':'SPORTS','Golf':'SPORTS','Tennis':'SPORTS','Pickleball':'SPORTS',
+      'Cars':'TRANSPORTATION','Trucks':'TRANSPORTATION','Motorcycles':'TRANSPORTATION','Dirtbikes':'TRANSPORTATION','4Wheelers':'TRANSPORTATION','Trains':'TRANSPORTATION','Planes':'TRANSPORTATION',
+      'Traveling':'TRAVEL','Flying':'TRAVEL','Cruises':'TRAVEL'
+    };
+    return mapping[field] || 'GENERAL';
+  }
+
+  // initialize selected count
+  updateSelectedCount();
+
+})();
+</script>
+</body>
+</html>
