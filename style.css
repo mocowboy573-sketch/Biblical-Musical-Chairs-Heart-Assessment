@@ -45,11 +45,21 @@ header p{margin:0;color:var(--muted);font-size:13px}
 .rating{margin-left:auto;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
 .rating input[type="number"]{width:56px;padding:6px;border-radius:6px;border:1px solid var(--border);text-align:center;font-size:13px;background:#fff}
 
+/* Disabled selection-phase rating inputs: subtle, empty appearance */
+.rating input[type="number"]:disabled{
+  background:transparent;
+  color:var(--muted);
+  border-style:dashed;
+  box-shadow:none;
+}
+
+/* Controls */
 .controls{display:flex;gap:10px;margin-top:12px;align-items:center}
 .btn{background:linear-gradient(180deg,var(--accent),#8f6f03);color:white;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600;box-shadow:0 6px 18px rgba(184,134,11,0.12)}
 .btn.secondary{background:transparent;color:var(--accent);border:1px solid var(--border);font-weight:600}
 .note{color:var(--muted);font-size:13px;margin-top:8px}
 
+/* Results */
 .results{display:flex;flex-direction:column;gap:12px}
 .summary{padding:12px;border-radius:8px;background:linear-gradient(180deg,#fff,#fffaf0);border:1px solid var(--border)}
 .top-list{display:flex;flex-direction:column;gap:8px}
@@ -73,8 +83,11 @@ button{font-family:inherit}
 
 .category + .category{margin-top:6px}
 .item:hover{background:linear-gradient(90deg, rgba(184,134,11,0.02), rgba(255,255,255,0.02))}
-.rating input[type="number"]:disabled{background:transparent;color:var(--muted);border-style:dashed}
 
+/* Ensure rating inputs in rating step are clear and prominent */
+.step-rate{width:64px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.08);text-align:center;font-size:14px;background:#fff}
+
+/* Print tweaks */
 @media print{
   body{padding:0}
   .controls, footer, .verse{display:none}
