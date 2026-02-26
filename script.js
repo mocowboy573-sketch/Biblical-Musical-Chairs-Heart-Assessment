@@ -1,3 +1,12 @@
+/* Biblical Musical Chairs Heart Assessment — script.js
+   - Builds categories and items
+   - Enforces exactly 8 selections
+   - Allows rating each selected item 1–20 (duplicates allowed)
+   - Tie-breaker: if God/Jesus/Holy Spirit ties with any item, God is moved DOWN
+   - Narrative box shows NKJV scriptures and tie message only if triggered
+   - Includes PDF download of results + narrative
+*/
+
 const categories = {
   "Collections":[
     "Money","Heirlooms","Souvenirs","Antiques","Watches","Shoes","Hats","Clothes","Toys",
@@ -42,7 +51,7 @@ const categories = {
   "Other":[ "Beer","Liquor","Alcohol","Smoking","Vaping" ]
 };
 
-// build category checkboxes
+// Build category checkboxes
 const categoriesDiv = document.getElementById('categories');
 Object.entries(categories).forEach(([cat, items])=>{
   const container = document.createElement('div');
@@ -58,7 +67,7 @@ Object.entries(categories).forEach(([cat, items])=>{
   categoriesDiv.appendChild(container);
 });
 
-// selection -> rating form
+// Selection -> rating form
 document.getElementById('submitSelection').addEventListener('click', ()=>{
   const selected = [...document.querySelectorAll('input[name="item"]:checked')].map(i=>i.value);
   if(selected.length !== 8){
@@ -86,7 +95,7 @@ document.getElementById('submitSelection').addEventListener('click', ()=>{
   document.getElementById('tieBreakerMessage').textContent = '';
 });
 
-// compute results and apply tie-breaker
+// Compute results + tie-breaker
 document.getElementById('seeResults').addEventListener('click', ()=>{
   const selects = document.querySelectorAll('#ratingForm select');
   if(selects.length === 0) { alert('No items to rate.'); return; }
@@ -97,10 +106,9 @@ document.getElementById('seeResults').addEventListener('click', ()=>{
     ratings[item] = parseInt(sel.value,10);
   });
 
-  // sort descending by rating
   let sorted = Object.entries(ratings).sort((a,b)=> b[1] - a[1]);
 
-  // tie-breaker: if God/Jesus/Holy Spirit ties with any other item, move God DOWN
+  // Tie-breaker: God moves DOWN
   let tieBreakerTriggered = false;
   const godKey = "God/Jesus/Holy Spirit";
   const godIndex = sorted.findIndex(([k]) => k === godKey);
@@ -110,16 +118,17 @@ document.getElementById('seeResults').addEventListener('click', ()=>{
     const tied = sorted.filter(([k,r]) => r === godRating);
     if(tied.length > 1){
       tieBreakerTriggered = true;
-      // remove God entry
+
       const [godEntry] = sorted.splice(godIndex,1);
-      // find insertion index after all items that share the godRating
+
       let insertAfter = sorted.findIndex(([k,r]) => r < godRating);
       if(insertAfter === -1) insertAfter = sorted.length;
+
       sorted.splice(insertAfter, 0, godEntry);
     }
   }
 
-  // show ranked results
+  // Display ranked results
   const resultsDiv = document.getElementById('results');
   resultsDiv.style.display = 'block';
   resultsDiv.innerHTML = '<h2>Your Ranked Results</h2>';
@@ -129,45 +138,77 @@ document.getElementById('seeResults').addEventListener('click', ()=>{
     );
   });
 
-  // show narrative box (scriptures are static)
+  // Show narrative box
   const narrative = document.getElementById('narrativeBox');
   narrative.style.display = 'block';
 
-  // show tie-breaker message only if triggered (user-provided verbiage)
+  // Tie-breaker message (NKJV)
   const tieMsg = document.getElementById('tieBreakerMessage');
   tieMsg.textContent = tieBreakerTriggered
     ? `Matthew 22:37 (NKJV), "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'" The reason God/Jesus/Holy Spirit was bumped down when a tie occurred is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.`
     : '';
 
-  // enable download button and attach data
-  document.getElementById('downloadResults').onclick = () => downloadResults(sorted, tieBreakerTriggered);
+  // Enable PDF download
+  document.getElementById('downloadResults').onclick = () =>
+    downloadPDF(sorted, tieBreakerTriggered);
 });
 
-// create and download a text file with results + narrative
-function downloadResults(sortedArray, tieTriggered){
-  const now = new Date().toISOString();
-  let text = `Biblical Musical Chairs Heart Assessment Results\nGenerated: ${now}\n\nRanked Results:\n`;
+// PDF download function
+function downloadPDF(sortedArray, tieTriggered) {
+
+  let html = `
+    <html>
+    <head>
+      <title>Biblical Musical Chairs Heart Assessment Results</title>
+      <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { text-align: center; }
+        h2 { margin-top: 24px; }
+        .scripture { margin-top: 12px; }
+        .tie { margin-top: 20px; font-weight: bold; color: #444; }
+      </style>
+    </head>
+    <body>
+      <h1>Biblical Musical Chairs Heart Assessment</h1>
+
+      <h2>Your Ranked Results</h2>
+  `;
+
   sortedArray.forEach(([item, rating], idx) => {
-    text += `${idx+1}. ${item} — Rating: ${rating}\n`;
+    html += `<p><strong>${idx+1}.</strong> ${item} — Rating: ${rating}</p>`;
   });
 
-  text += `\nNarrative Scriptures (NKJV):\n`;
-  text += `Matthew 6:19 — Do not lay up for yourselves treasures on earth, where moth and rust destroy and where thieves break in and steal;\n`;
-  text += `Luke 14:26 — If anyone comes to Me and does not hate his father and mother, wife and children, brothers and sisters, yes, and his own life also, he cannot be My disciple.\n`;
-  text += `Matthew 6:20 — but lay up for yourselves treasures in heaven, where neither moth nor rust destroys and where thieves do not break in and steal.\n`;
-  text += `Psalm 139:23 — Search me, O God, and know my heart; try me, and know my anxieties.\n\n`;
+  html += `
+      <h2>Scriptures (NKJV)</h2>
 
-  if(tieTriggered){
-    text += `Tie-breaker note:\nMatthew 22:37 — "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'"\nThe reason God/Jesus/Holy Spirit was bumped down when a tie occurred is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.\n`;
+      <p class="scripture"><strong>Psalm 139:23</strong> — "Search me, O God, and know my heart; try me, and know my anxieties."</p>
+      <p class="scripture"><strong>Matthew 6:19</strong> — "Do not lay up for yourselves treasures on earth, where moth and rust destroy and where thieves break in and steal;"</p>
+      <p class="scripture"><strong>Luke 14:26</strong> — "If anyone comes to Me and does not hate his father and mother, wife and children, brothers and sisters, yes, and his own life also, he cannot be My disciple."</p>
+      <p class="scripture"><strong>Matthew 6:20</strong> — "but lay up for yourselves treasures in heaven, where neither moth nor rust destroys and where thieves do not break in and steal."</p>
+  `;
+
+  if (tieTriggered) {
+    html += `
+      <p class="tie">
+        <strong>Matthew 22:37 (NKJV)</strong> — "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'"<br><br>
+        The reason God/Jesus/Holy Spirit was bumped down when a tie occurred is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.
+      </p>
+    `;
   }
 
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'TreasureOfOurHeart_Results.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  html += `
+    </body>
+    </html>
+  `;
+
+  const printWindow = window.open('', '_blank');
+  printWindow.document.open();
+  printWindow.document.write(html);
+  printWindow.document.close();
+
+  printWindow.onload = () => {
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  };
 }
