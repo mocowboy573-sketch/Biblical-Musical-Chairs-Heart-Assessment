@@ -12,20 +12,10 @@ header {
 
 h1 {
     color: #e0e1dd;
-    margin-bottom: 10px;
 }
 
 h2 {
     color: #f0c75e;
-    margin-bottom: 10px;
-}
-
-#scriptures, #pastorReflection {
-    background: #1b263b;
-    padding: 20px;
-    border-left: 5px solid #f0c75e;
-    margin-bottom: 30px;
-    border-radius: 6px;
 }
 
 .category {
@@ -55,13 +45,17 @@ button:hover {
     background: #ffd77f;
 }
 
-#ratingSection, #results {
+#ratingSection, #results, #narrativeBox {
     display: none;
     background: #1b263b;
     padding: 20px;
     border-radius: 6px;
     border-left: 5px solid #f0c75e;
     margin-top: 20px;
+}
+
+.scripture-block {
+    margin-bottom: 20px;
 }
 
 .rating-item {
