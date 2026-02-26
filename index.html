@@ -1,284 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Values & Priorities — Assessment</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treasure of Our Heart Questionnaire</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="container" role="main">
-    <header>
-      <div class="logo">Faith</div>
-      <div>
-        <h1>Values & Priorities Assessment</h1>
-        <p>Step 1: select exactly <strong>8</strong> items. Step 2: rate those top 8 from <strong>1–20</strong>.</p>
-        <div class="verse">“Search me, O God, and know my heart.” — Psalm 139:23</div>
-      </div>
-    </header>
 
-    <div class="grid">
-      <section class="panel">
-        <div id="selectionPhase">
-          <div class="categories" id="categories">
+<header>
+    <h1>Treasure of Our Heart Questionnaire</h1>
+    <p>Select the 8 things that hold the greatest place in your heart.</p>
+</header>
 
-            <!-- BELIEFS -->
-            <div class="category" data-name="BELIEFS">
-              <h3>BELIEFS</h3>
-              <div class="items two-col">
-                <div>
-                  <div class="item"><input type="checkbox" id="chk_Religion" data-field="Religion"><label for="chk_Religion">Religion</label><div class="rating"><input type="number" id="rate_Religion" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Culture" data-field="Culture"><label for="chk_Culture">Culture</label><div class="rating"><input type="number" id="rate_Culture" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Science" data-field="Science"><label for="chk_Science">Science</label><div class="rating"><input type="number" id="rate_Science" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Bible" data-field="Bible"><label for="chk_Bible">Bible</label><div class="rating"><input type="number" id="rate_Bible" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_GodJesusHolySpirit" data-field="GodJesusHolySpirit"><label for="chk_GodJesusHolySpirit">God / Jesus / Holy Spirit</label><div class="rating"><input type="number" id="rate_GodJesusHolySpirit" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Evangelism" data-field="Evangelism"><label for="chk_Evangelism">Evangelism</label><div class="rating"><input type="number" id="rate_Evangelism" min="1" max="20" disabled></div></div>
-                </div>
-                <div>
-                  <div class="item"><input type="checkbox" id="chk_PreachingTeaching" data-field="PreachingTeaching"><label for="chk_PreachingTeaching">Preaching / Teaching</label><div class="rating"><input type="number" id="rate_PreachingTeaching" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Church" data-field="Church"><label for="chk_Church">Church</label><div class="rating"><input type="number" id="rate_Church" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_ChurchFamily" data-field="ChurchFamily"><label for="chk_ChurchFamily">Church Family</label><div class="rating"><input type="number" id="rate_ChurchFamily" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_CaringforOthers" data-field="CaringforOthers"><label for="chk_CaringforOthers">Caring for Others</label><div class="rating"><input type="number" id="rate_CaringforOthers" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Prayer" data-field="Prayer"><label for="chk_Prayer">Prayer</label><div class="rating"><input type="number" id="rate_Prayer" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_PrayingforOthers" data-field="PrayingforOthers"><label for="chk_PrayingforOthers">Praying for Others</label><div class="rating"><input type="number" id="rate_PrayingforOthers" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_MiraclesSignsWonders" data-field="MiraclesSignsWonders"><label for="chk_MiraclesSignsWonders">Miracles, Signs, Wonders</label><div class="rating"><input type="number" id="rate_MiraclesSignsWonders" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_WorshipPraise" data-field="WorshipPraise"><label for="chk_WorshipPraise">Worship / Praise</label><div class="rating"><input type="number" id="rate_WorshipPraise" min="1" max="20" disabled></div></div>
-                </div>
-              </div>
-            </div>
+<section id="scriptures">
+    <h2>Scripture References</h2>
+    <p><strong>Matthew 6:19</strong> — “Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal.”</p>
+    <p><strong>Luke 14:26</strong> — “If anyone comes to me and does not hate father and mother, wife and children, brothers and sisters—yes, even their own life—such a person cannot be my disciple.”</p>
+    <p><strong>Matthew 6:20</strong> — “But store up for yourselves treasures in heaven, where moths and vermin do not destroy, and where thieves do not break in and steal.”</p>
+</section>
 
-            <!-- COLLECTIONS -->
-            <div class="category" data-name="COLLECTIONS">
-              <h3>COLLECTIONS</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Cars" data-field="Cars"><label for="chk_Cars">Cars</label><div class="rating"><input type="number" id="rate_Cars" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Collecting" data-field="Collecting"><label for="chk_Collecting">Collecting</label><div class="rating"><input type="number" id="rate_Collecting" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Art" data-field="Art"><label for="chk_Art">Art</label><div class="rating"><input type="number" id="rate_Art" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Antiques" data-field="Antiques"><label for="chk_Antiques">Antiques</label><div class="rating"><input type="number" id="rate_Antiques" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
+<form id="selectionForm">
 
-            <!-- EXERCISE -->
-            <div class="category" data-name="EXERCISE">
-              <h3>EXERCISE</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Walking" data-field="Walking"><label for="chk_Walking">Walking</label><div class="rating"><input type="number" id="rate_Walking" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Running" data-field="Running"><label for="chk_Running">Running</label><div class="rating"><input type="number" id="rate_Running" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_LiftingWeights" data-field="LiftingWeights"><label for="chk_LiftingWeights">Lifting Weights</label><div class="rating"><input type="number" id="rate_LiftingWeights" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Crossfit" data-field="Crossfit"><label for="chk_Crossfit">Crossfit</label><div class="rating"><input type="number" id="rate_Crossfit" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_GymTime" data-field="GymTime"><label for="chk_GymTime">Gym Time</label><div class="rating"><input type="number" id="rate_GymTime" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Yoga" data-field="Yoga"><label for="chk_Yoga">Yoga</label><div class="rating"><input type="number" id="rate_Yoga" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
+    <!-- All categories and items -->
+    <div id="categories"></div>
 
-            <!-- HOME RELATED -->
-            <div class="category" data-name="HOME RELATED">
-              <h3>HOME RELATED</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_AloneTime" data-field="AloneTime"><label for="chk_AloneTime">Alone Time</label><div class="rating"><input type="number" id="rate_AloneTime" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_BeingHome" data-field="BeingHome"><label for="chk_BeingHome">Being Home</label><div class="rating"><input type="number" id="rate_BeingHome" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_TravelingLocal" data-field="TravelingLocal"><label for="chk_TravelingLocal">Traveling (local)</label><div class="rating"><input type="number" id="rate_TravelingLocal" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Holidays" data-field="Holidays"><label for="chk_Holidays">Holidays</label><div class="rating"><input type="number" id="rate_Holidays" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_FamilyTime" data-field="FamilyTime"><label for="chk_FamilyTime">Family Time</label><div class="rating"><input type="number" id="rate_FamilyTime" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_SleepingNapping" data-field="SleepingNapping"><label for="chk_SleepingNapping">Sleeping / Napping</label><div class="rating"><input type="number" id="rate_SleepingNapping" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
+    <button type="button" id="submitSelection">Submit Top 8</button>
+</form>
 
-            <!-- INDOOR ACTIVITIES -->
-            <div class="category" data-name="INDOOR ACTIVITIES">
-              <h3>INDOOR ACTIVITIES</h3>
-              <div class="items two-col">
-                <div>
-                  <div class="item"><input type="checkbox" id="chk_Puzzles" data-field="Puzzles"><label for="chk_Puzzles">Puzzles</label><div class="rating"><input type="number" id="rate_Puzzles" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Reading" data-field="Reading"><label for="chk_Reading">Reading</label><div class="rating"><input type="number" id="rate_Reading" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Writing" data-field="Writing"><label for="chk_Writing">Writing</label><div class="rating"><input type="number" id="rate_Writing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Journaling" data-field="Journaling"><label for="chk_Journaling">Journaling</label><div class="rating"><input type="number" id="rate_Journaling" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Movies" data-field="Movies"><label for="chk_Movies">Movies</label><div class="rating"><input type="number" id="rate_Movies" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_ProducingMusic" data-field="ProducingMusic"><label for="chk_ProducingMusic">Producing Music</label><div class="rating"><input type="number" id="rate_ProducingMusic" min="1" max="20" disabled></div></div>
-                </div>
-                <div>
-                  <div class="item"><input type="checkbox" id="chk_WatchingTV" data-field="WatchingTV"><label for="chk_WatchingTV">Watching TV</label><div class="rating"><input type="number" id="rate_WatchingTV" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_VideoGames" data-field="VideoGames"><label for="chk_VideoGames">Video Games</label><div class="rating"><input type="number" id="rate_VideoGames" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_BoardCardGames" data-field="BoardCardGames"><label for="chk_BoardCardGames">Board / Card Games</label><div class="rating"><input type="number" id="rate_BoardCardGames" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Sewing" data-field="Sewing"><label for="chk_Sewing">Sewing</label><div class="rating"><input type="number" id="rate_Sewing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Eating" data-field="Eating"><label for="chk_Eating">Eating</label><div class="rating"><input type="number" id="rate_Eating" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_CookingBaking" data-field="CookingBaking"><label for="chk_CookingBaking">Cooking / Baking</label><div class="rating"><input type="number" id="rate_CookingBaking" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Drawing" data-field="Drawing"><label for="chk_Drawing">Drawing</label><div class="rating"><input type="number" id="rate_Drawing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Crafting" data-field="Crafting"><label for="chk_Crafting">Crafting</label><div class="rating"><input type="number" id="rate_Crafting" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_DigitalCreator" data-field="DigitalCreator"><label for="chk_DigitalCreator">Digital Creator</label><div class="rating"><input type="number" id="rate_DigitalCreator" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Sculpting" data-field="Sculpting"><label for="chk_Sculpting">Sculpting</label><div class="rating"><input type="number" id="rate_Sculpting" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Woodworking" data-field="Woodworking"><label for="chk_Woodworking">Woodworking</label><div class="rating"><input type="number" id="rate_Woodworking" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Acting" data-field="Acting"><label for="chk_Acting">Acting</label><div class="rating"><input type="number" id="rate_Acting" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_PlayingMusic" data-field="PlayingMusic"><label for="chk_PlayingMusic">Playing Music</label><div class="rating"><input type="number" id="rate_PlayingMusic" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_DateNights" data-field="DateNights"><label for="chk_DateNights">Date Nights</label><div class="rating"><input type="number" id="rate_DateNights" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Dancing" data-field="Dancing"><label for="chk_Dancing">Dancing</label><div class="rating"><input type="number" id="rate_Dancing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_SingingKaraoke" data-field="SingingKaraoke"><label for="chk_SingingKaraoke">Singing / Karaoke</label><div class="rating"><input type="number" id="rate_SingingKaraoke" min="1" max="20" disabled></div></div>
-                </div>
-              </div>
-            </div>
+<section id="ratingSection">
+    <h2>Rate Your Top 8 (1–20)</h2>
+    <form id="ratingForm"></form>
+    <button id="seeResults">See Results</button>
+</section>
 
-            <!-- OCCUPATION -->
-            <div class="category" data-name="OCCUPATION">
-              <h3>OCCUPATION</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_WorkJob" data-field="WorkJob"><label for="chk_WorkJob">Work / Job</label><div class="rating"><input type="number" id="rate_WorkJob" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Volunteering" data-field="Volunteering"><label for="chk_Volunteering">Volunteering</label><div class="rating"><input type="number" id="rate_Volunteering" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Leading" data-field="Leading"><label for="chk_Leading">Leading</label><div class="rating"><input type="number" id="rate_Leading" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Following" data-field="Following"><label for="chk_Following">Following</label><div class="rating"><input type="number" id="rate_Following" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Supervising" data-field="Supervising"><label for="chk_Supervising">Supervising</label><div class="rating"><input type="number" id="rate_Supervising" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Mentoring" data-field="Mentoring"><label for="chk_Mentoring">Mentoring</label><div class="rating"><input type="number" id="rate_Mentoring" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
+<section id="results"></section>
 
-            <!-- OTHER -->
-            <div class="category" data-name="OTHER">
-              <h3>OTHER</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Beer" data-field="Beer"><label for="chk_Beer">Beer</label><div class="rating"><input type="number" id="rate_Beer" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Liquor" data-field="Liquor"><label for="chk_Liquor">Liquor</label><div class="rating"><input type="number" id="rate_Liquor" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Alcohol" data-field="Alcohol"><label for="chk_Alcohol">Alcohol</label><div class="rating"><input type="number" id="rate_Alcohol" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Smoking" data-field="Smoking"><label for="chk_Smoking">Smoking</label><div class="rating"><input type="number" id="rate_Smoking" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Vaping" data-field="Vaping"><label for="chk_Vaping">Vaping</label><div class="rating"><input type="number" id="rate_Vaping" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
-
-            <!-- OUTDOOR ACTIVITIES -->
-            <div class="category" data-name="OUTDOOR ACTIVITIES">
-              <h3>OUTDOOR ACTIVITIES</h3>
-              <div class="items two-col">
-                <div>
-                  <div class="item"><input type="checkbox" id="chk_Gardening" data-field="Gardening"><label for="chk_Gardening">Gardening</label><div class="rating"><input type="number" id="rate_Gardening" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Lawncare" data-field="Lawncare"><label for="chk_Lawncare">Lawn care</label><div class="rating"><input type="number" id="rate_Lawncare" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Driving" data-field="Driving"><label for="chk_Driving">Driving</label><div class="rating"><input type="number" id="rate_Driving" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Racing" data-field="Racing"><label for="chk_Racing">Racing</label><div class="rating"><input type="number" id="rate_Racing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Cornhole" data-field="Cornhole"><label for="chk_Cornhole">Cornhole</label><div class="rating"><input type="number" id="rate_Cornhole" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Horseshoes" data-field="Horseshoes"><label for="chk_Horseshoes">Horseshoes</label><div class="rating"><input type="number" id="rate_Horseshoes" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_ScubaDiving" data-field="ScubaDiving"><label for="chk_ScubaDiving">Scuba Diving</label><div class="rating"><input type="number" id="rate_ScubaDiving" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Shopping" data-field="Shopping"><label for="chk_Shopping">Shopping</label><div class="rating"><input type="number" id="rate_Shopping" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_BikeRiding" data-field="BikeRiding"><label for="chk_BikeRiding">Bike Riding</label><div class="rating"><input type="number" id="rate_BikeRiding" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Surfing" data-field="Surfing"><label for="chk_Surfing">Surfing</label><div class="rating"><input type="number" id="rate_Surfing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Hunting" data-field="Hunting"><label for="chk_Hunting">Hunting</label><div class="rating"><input type="number" id="rate_Hunting" min="1" max="20" disabled></div></div>
-                </div>
-                <div>
-                  <div class="item"><input type="checkbox" id="chk_BeachLife" data-field="BeachLife"><label for="chk_BeachLife">Beach Life</label><div class="rating"><input type="number" id="rate_BeachLife" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Tanning" data-field="Tanning"><label for="chk_Tanning">Tanning</label><div class="rating"><input type="number" id="rate_Tanning" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Birdwatching" data-field="Birdwatching"><label for="chk_Birdwatching">Birdwatching</label><div class="rating"><input type="number" id="rate_Birdwatching" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Paintball" data-field="Paintball"><label for="chk_Paintball">Paintball</label><div class="rating"><input type="number" id="rate_Paintball" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Archery" data-field="Archery"><label for="chk_Archery">Archery</label><div class="rating"><input type="number" id="rate_Archery" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Photography" data-field="Photography"><label for="chk_Photography">Photography</label><div class="rating"><input type="number" id="rate_Photography" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_OffRoading" data-field="OffRoading"><label for="chk_OffRoading">Off-roading</label><div class="rating"><input type="number" id="rate_OffRoading" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Mudding" data-field="Mudding"><label for="chk_Mudding">Mudding</label><div class="rating"><input type="number" id="rate_Mudding" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Camping" data-field="Camping"><label for="chk_Camping">Camping</label><div class="rating"><input type="number" id="rate_Camping" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Fishing" data-field="Fishing"><label for="chk_Fishing">Fishing</label><div class="rating"><input type="number" id="rate_Fishing" min="1" max="20" disabled></div></div>
-                  <div class="item"><input type="checkbox" id="chk_Hiking" data-field="Hiking"><label for="chk_Hiking">Hiking</label><div class="rating"><input type="number" id="rate_Hiking" min="1" max="20" disabled></div></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- PEOPLE -->
-            <div class="category" data-name="PEOPLE">
-              <h3>PEOPLE</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Friends" data-field="Friends"><label for="chk_Friends">Friends</label><div class="rating"><input type="number" id="rate_Friends" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Family" data-field="Family"><label for="chk_Family">Family</label><div class="rating"><input type="number" id="rate_Family" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Partner" data-field="Partner"><label for="chk_Partner">Partner</label><div class="rating"><input type="number" id="rate_Partner" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Children" data-field="Children"><label for="chk_Children">Children</label><div class="rating"><input type="number" id="rate_Children" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Pets" data-field="Pets"><label for="chk_Pets">Pets</label><div class="rating"><input type="number" id="rate_Pets" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Romance" data-field="Romance"><label for="chk_Romance">Romance</label><div class="rating"><input type="number" id="rate_Romance" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
-
-            <!-- SPORTS -->
-            <div class="category" data-name="SPORTS">
-              <h3>SPORTS</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Football" data-field="Football"><label for="chk_Football">Football</label><div class="rating"><input type="number" id="rate_Football" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Baseball" data-field="Baseball"><label for="chk_Baseball">Baseball</label><div class="rating"><input type="number" id="rate_Baseball" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Soccer" data-field="Soccer"><label for="chk_Soccer">Soccer</label><div class="rating"><input type="number" id="rate_Soccer" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Basketball" data-field="Basketball"><label for="chk_Basketball">Basketball</label><div class="rating"><input type="number" id="rate_Basketball" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Golf" data-field="Golf"><label for="chk_Golf">Golf</label><div class="rating"><input type="number" id="rate_Golf" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Tennis" data-field="Tennis"><label for="chk_Tennis">Tennis</label><div class="rating"><input type="number" id="rate_Tennis" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Pickleball" data-field="Pickleball"><label for="chk_Pickleball">Pickleball</label><div class="rating"><input type="number" id="rate_Pickleball" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_MartialArts" data-field="MartialArts"><label for="chk_MartialArts">Martial Arts</label><div class="rating"><input type="number" id="rate_MartialArts" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Bowling" data-field="Bowling"><label for="chk_Bowling">Bowling</label><div class="rating"><input type="number" id="rate_Bowling" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Skateboarding" data-field="Skateboarding"><label for="chk_Skateboarding">Skateboarding</label><div class="rating"><input type="number" id="rate_Skateboarding" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Swimming" data-field="Swimming"><label for="chk_Swimming">Swimming</label><div class="rating"><input type="number" id="rate_Swimming" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_OtherSport" data-field="OtherSport"><label for="chk_OtherSport">Other Sport</label><div class="rating"><input type="number" id="rate_OtherSport" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Gymnastics" data-field="Gymnastics"><label for="chk_Gymnastics">Gymnastics</label><div class="rating"><input type="number" id="rate_Gymnastics" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Volleyball" data-field="Volleyball"><label for="chk_Volleyball">Volleyball</label><div class="rating"><input type="number" id="rate_Volleyball" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
-
-            <!-- TRANSPORTATION -->
-            <div class="category" data-name="TRANSPORTATION">
-              <h3>TRANSPORTATION</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Cars2" data-field="Cars"><label for="chk_Cars2">Cars</label><div class="rating"><input type="number" id="rate_Cars2" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Trucks" data-field="Trucks"><label for="chk_Trucks">Trucks</label><div class="rating"><input type="number" id="rate_Trucks" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Motorcycles" data-field="Motorcycles"><label for="chk_Motorcycles">Motorcycles</label><div class="rating"><input type="number" id="rate_Motorcycles" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Dirtbikes" data-field="Dirtbikes"><label for="chk_Dirtbikes">Dirtbikes</label><div class="rating"><input type="number" id="rate_Dirtbikes" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_4Wheelers" data-field="4Wheelers"><label for="chk_4Wheelers">4-Wheelers</label><div class="rating"><input type="number" id="rate_4Wheelers" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Trains" data-field="Trains"><label for="chk_Trains">Trains</label><div class="rating"><input type="number" id="rate_Trains" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Planes" data-field="Planes"><label for="chk_Planes">Planes</label><div class="rating"><input type="number" id="rate_Planes" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
-
-            <!-- TRAVEL -->
-            <div class="category" data-name="TRAVEL">
-              <h3>TRAVEL</h3>
-              <div class="items">
-                <div class="item"><input type="checkbox" id="chk_Traveling" data-field="Traveling"><label for="chk_Traveling">Traveling</label><div class="rating"><input type="number" id="rate_Traveling" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Flying" data-field="Flying"><label for="chk_Flying">Flying</label><div class="rating"><input type="number" id="rate_Flying" min="1" max="20" disabled></div></div>
-                <div class="item"><input type="checkbox" id="chk_Cruises" data-field="Cruises"><label for="chk_Cruises">Cruises</label><div class="rating"><input type="number" id="rate_Cruises" min="1" max="20" disabled></div></div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="controls">
-            <button class="btn" id="proceedBtn">Proceed to Rating</button>
-            <button class="btn secondary" id="resetBtn" type="button">Reset</button>
-            <div style="margin-left:auto;color:var(--muted);font-size:13px;">Selected: <span id="selectedCount">0</span>/8</div>
-          </div>
-          <div class="note">Tip: choose the 8 items that most shape your heart. You will rate only those in the next step.</div>
-        </div>
-
-        <!-- Rating phase (hidden initially) -->
-        <div id="ratingPhase" style="display:none;">
-          <h3 style="color:var(--accent);font-family:Merriweather,serif;margin-top:0;">Step 2 — Rate your top 8</h3>
-          <div id="selectedList" class="items" aria-live="polite"></div>
-
-          <div class="controls" style="margin-top:12px;">
-            <button class="btn" id="generateBtn">Generate Results</button>
-            <button class="btn secondary" id="backBtn" type="button">Back to Selection</button>
-            <div style="margin-left:auto;color:var(--muted);font-size:13px;">Rate each 1–20</div>
-          </div>
-          <div class="note">You can return to selection to change choices. Ratings default to 10 in the rating step.</div>
-        </div>
-
-      </section>
-
-      <aside class="panel results" aria-live="polite">
-        <div class="summary">
-          <strong>Results</strong>
-          <div style="margin-top:8px;color:var(--muted);font-size:13px;">Top items will appear here after you rate your selected 8 and click <strong>Generate Results</strong>.</div>
-        </div>
-
-        <div id="topContainer"></div>
-
-        <div class="summary" id="reflectionBlock" style="display:none;">
-          <strong>Reflection</strong>
-          <div id="reflectionText" style="margin-top:8px;color:var(--muted);font-size:13px;"></div>
-        </div>
-
-      </aside>
-    </div>
-
-    <footer>
-      Created to help you discern what shapes your heart.
-    </footer>
-  </div>
+<section id="pastorReflection">
+    <h2>Pastor’s Reflection</h2>
+    <p>
+        Our hearts are shaped by what we treasure most. Jesus teaches us that earthly things fade, 
+        but heavenly treasures endure forever. This exercise is not meant to shame or condemn, 
+        but to help us honestly see what competes for the throne of our hearts. 
+        When we place God first, everything else finds its proper place. 
+        May this reflection draw you closer to Christ and deepen your desire to treasure Him above all.
+    </p>
+</section>
 
 <script src="script.js"></script>
 </body>
