@@ -4,7 +4,7 @@
    - Allows rating each selected item 1–20 (duplicates allowed)
    - Tie-breaker: if God/Jesus/Holy Spirit ties with any item, God is moved DOWN
    - Narrative box shows NKJV scriptures and tie message only if triggered
-   - Includes PDF download of results + narrative
+   - Includes PDF download of results + narrative + Psalm 139:23 + Creator line
 */
 
 const categories = {
@@ -166,10 +166,17 @@ function downloadPDF(sortedArray, tieTriggered) {
         h2 { margin-top: 24px; }
         .scripture { margin-top: 12px; }
         .tie { margin-top: 20px; font-weight: bold; color: #444; }
+        .creator { text-align:center; font-weight:bold; margin-bottom:20px; }
+        .subtitle { text-align:center; font-style:italic; margin-bottom:10px; }
       </style>
     </head>
     <body>
+
       <h1>Biblical Musical Chairs Heart Assessment</h1>
+
+      <p class="subtitle"><strong>Psalm 139:23 (NKJV)</strong> — "Search me, O God, and know my heart; try me, and know my anxieties."</p>
+
+      <p class="creator">Created by Reverend Jesse L. Williams</p>
 
       <h2>Your Ranked Results</h2>
   `;
@@ -181,7 +188,6 @@ function downloadPDF(sortedArray, tieTriggered) {
   html += `
       <h2>Scriptures (NKJV)</h2>
 
-      <p class="scripture"><strong>Psalm 139:23</strong> — "Search me, O God, and know my heart; try me, and know my anxieties."</p>
       <p class="scripture"><strong>Matthew 6:19</strong> — "Do not lay up for yourselves treasures on earth, where moth and rust destroy and where thieves break in and steal;"</p>
       <p class="scripture"><strong>Luke 14:26</strong> — "If anyone comes to Me and does not hate his father and mother, wife and children, brothers and sisters, yes, and his own life also, he cannot be My disciple."</p>
       <p class="scripture"><strong>Matthew 6:20</strong> — "but lay up for yourselves treasures in heaven, where neither moth nor rust destroys and where thieves do not break in and steal."</p>
