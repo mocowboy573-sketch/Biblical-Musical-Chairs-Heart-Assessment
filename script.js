@@ -1,246 +1,271 @@
-// ----- DATA: ITEMS (MATCHING YOUR PDF CHECKBOXES) -----
-const ITEMS = [
-  "4Wheelers","Acting","ActionFigures","Alcohol","AloneTime","Antiques","Archery","Art",
-  "Baseball","Basketball","BeachLife","Beer","BeingHome","Bible","BikeRiding","Birdwatching",
-  "BoardCardGames","Bowling","Camping","CaringforOthers","Cars","Children","Church",
-  "ChurchFamily","Clothes","Coins","ComicBooks","CookingBaking","Cornhole","Coworkers",
-  "Crafting","Crossfit","Cruises","Culture","Dancing","DateNights","Daughter","DigitalCreator",
-  "Dirtbikes","Drawing","Driving","Eating","Evangelism","Family","FamilyTime","Fishing",
-  "Flying","Following","Football","Friends","Gardening","GodJesusHolySpirit","Golf","GymTime",
-  "Gymnastics","Hats","Heirlooms","Hiking","Holidays","Horseshoes","Hunting","Husband",
-  "Jewelry","Journaling","Lawncare","Leading","LiftingWeights","Liquor","MartialArts",
-  "Mentoring","MiraclesSignsWonders","Money","Motorcycles","Movies","Mudding","OffRoading",
-  "OtherSport","Paintball","Pets","Photography","Pickleball","Planes","PlayingMusic","Prayer",
-  "PrayingforOthers","PreachingTeaching","ProducingMusic","Puzzles","Racing","Reading",
-  "Religion","RocksCrystals","Running","Science","ScubaDiving","Sculpting","Sewing","Shoes",
-  "Shopping","SingingKaraoke","Skateboarding","SleepingNapping","Smoking","Soccer","Son",
-  "Souvenirs","Supervising","Surfing","Swimming","Tanning","Tennis","Toys","TradingCards",
-  "Trains","Traveling","TravelingLocal","Trucks","Vaping","VideoGames","Volleyball",
-  "Volunteering","Walking","Watches","WatchingTV","Wife","Woodworking","WorkJob",
-  "WorshipPraise","Writing","Yoga"
-];
+// script.js
+// Values & Priorities Assessment — behavior script
+// Requires the HTML structure where each checkbox has data-field="<FieldName>"
+// and rating inputs use id starting with "rate_<FieldName>"
 
-const MAX_SELECTION = 8;
+(() => {
+  'use strict';
 
-let selectedItems = []; // names
-let ratings = {};       // name -> number
+  const MAX_SELECT = 8;
+  const container = document.getElementById('categories');
+  const selectedCountEl = document.getElementById('selectedCount');
+  const generateBtn = document.getElementById('generateBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const topContainer = document.getElementById('topContainer');
+  const reflectionBlock = document.getElementById('reflectionBlock');
+  const reflectionText = document.getElementById('reflectionText');
 
-// ----- DOM ELEMENTS -----
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const step3 = document.getElementById("step3");
+  // gather checkboxes inside the categories container
+  const checkboxes = Array.from(container.querySelectorAll('input[type="checkbox"][data-field]'));
 
-const checkboxList = document.getElementById("checkboxList");
-const selectionCounter = document.getElementById("selectionCounter");
+  // helper: find rating input for a given field name
+  function ratingInputFor(field) {
+    // prefer exact id match first
+    const exact = document.getElementById('rate_' + field);
+    if (exact) return exact;
+    // fallback: any element whose id starts with rate_<field>
+    return document.querySelector('[id^="rate_' + field + '"]');
+  }
 
-const ratingsContainer = document.getElementById("ratingsContainer");
-const resultsNarrative = document.getElementById("resultsNarrative");
+  // update selected count display
+  function updateSelectedCount() {
+    const count = checkboxes.filter(cb => cb.checked).length;
+    selectedCountEl.textContent = String(count);
+    // optionally disable generate button unless exactly MAX_SELECT
+    // generateBtn.disabled = (count !== MAX_SELECT);
+  }
 
-const toStep2Btn = document.getElementById("toStep2");
-const backToStep1Btn = document.getElementById("backToStep1");
-const toStep3Btn = document.getElementById("toStep3");
-const startOverBtn = document.getElementById("startOver");
+  // prettify field names for display
+  function prettify(field) {
+    return field
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/_/g, ' ')
+      .replace(/\b4Wheelers\b/, '4-Wheelers')
+      .replace(/\bGodJesusHolySpirit\b/, 'God / Jesus / Holy Spirit')
+      .replace(/\bBoardCardGames\b/, 'Board / Card Games')
+      .replace(/\bCookingBaking\b/, 'Cooking / Baking')
+      .replace(/\bPlayingMusic\b/, 'Playing Music')
+      .replace(/\bWorshipPraise\b/, 'Worship / Praise')
+      .replace(/\bMiraclesSignsWonders\b/, 'Miracles, Signs, Wonders')
+      .replace(/\bTravelingLocal\b/, 'Traveling (local)')
+      .replace(/\bDateNights\b/, 'Date Nights')
+      .replace(/\bOtherSport\b/, 'Other Sport')
+      .trim();
+  }
 
-// ----- INITIAL RENDER: CHECKBOXES -----
-function renderCheckboxes() {
-  ITEMS.forEach(name => {
-    const id = "chk_" + name;
-    const wrapper = document.createElement("label");
-    wrapper.className = "checkbox-item";
+  // map field -> category label (used in results)
+  function categoryOfField(field) {
+    const mapping = {
+      'Religion':'BELIEFS','Culture':'BELIEFS','Science':'BELIEFS','Bible':'BELIEFS','GodJesusHolySpirit':'BELIEFS',
+      'Evangelism':'BELIEFS','PreachingTeaching':'BELIEFS','Church':'BELIEFS','ChurchFamily':'BELIEFS','CaringforOthers':'BELIEFS',
+      'Prayer':'BELIEFS','PrayingforOthers':'BELIEFS','MiraclesSignsWonders':'BELIEFS','WorshipPraise':'BELIEFS',
 
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.id = id;
-    input.value = name;
+      'Cars':'COLLECTIONS','Collecting':'COLLECTIONS','Art':'COLLECTIONS','Antiques':'COLLECTIONS',
 
-    input.addEventListener("change", () => handleCheckboxChange(input));
+      'Walking':'EXERCISE','Running':'EXERCISE','LiftingWeights':'EXERCISE','Crossfit':'EXERCISE','GymTime':'EXERCISE','Yoga':'EXERCISE',
 
-    const span = document.createElement("span");
-    span.textContent = name;
+      'AloneTime':'HOME RELATED','BeingHome':'HOME RELATED','TravelingLocal':'HOME RELATED','Holidays':'HOME RELATED','FamilyTime':'HOME RELATED','SleepingNapping':'HOME RELATED',
 
-    wrapper.appendChild(input);
-    wrapper.appendChild(span);
-    checkboxList.appendChild(wrapper);
+      'Puzzles':'INDOOR ACTIVITIES','Reading':'INDOOR ACTIVITIES','Writing':'INDOOR ACTIVITIES','Journaling':'INDOOR ACTIVITIES','Movies':'INDOOR ACTIVITIES','ProducingMusic':'INDOOR ACTIVITIES',
+      'WatchingTV':'INDOOR ACTIVITIES','VideoGames':'INDOOR ACTIVITIES','BoardCardGames':'INDOOR ACTIVITIES','Sewing':'INDOOR ACTIVITIES','Eating':'INDOOR ACTIVITIES','CookingBaking':'INDOOR ACTIVITIES',
+      'Drawing':'INDOOR ACTIVITIES','Crafting':'INDOOR ACTIVITIES','DigitalCreator':'INDOOR ACTIVITIES','Sculpting':'INDOOR ACTIVITIES','Woodworking':'INDOOR ACTIVITIES','Acting':'INDOOR ACTIVITIES',
+      'PlayingMusic':'INDOOR ACTIVITIES','DateNights':'INDOOR ACTIVITIES','Dancing':'INDOOR ACTIVITIES','SingingKaraoke':'INDOOR ACTIVITIES',
+
+      'WorkJob':'OCCUPATION','Volunteering':'OCCUPATION','Leading':'OCCUPATION','Following':'OCCUPATION','Supervising':'OCCUPATION','Mentoring':'OCCUPATION',
+
+      'Beer':'OTHER','Liquor':'OTHER','Alcohol':'OTHER','Smoking':'OTHER','Vaping':'OTHER',
+
+      'Gardening':'OUTDOOR ACTIVITIES','Lawncare':'OUTDOOR ACTIVITIES','Driving':'OUTDOOR ACTIVITIES','Racing':'OUTDOOR ACTIVITIES','Cornhole':'OUTDOOR ACTIVITIES','Horseshoes':'OUTDOOR ACTIVITIES',
+      'ScubaDiving':'OUTDOOR ACTIVITIES','Shopping':'OUTDOOR ACTIVITIES','BikeRiding':'OUTDOOR ACTIVITIES','Surfing':'OUTDOOR ACTIVITIES','Hunting':'OUTDOOR ACTIVITIES','BeachLife':'OUTDOOR ACTIVITIES',
+      'Tanning':'OUTDOOR ACTIVITIES','Birdwatching':'OUTDOOR ACTIVITIES','Paintball':'OUTDOOR ACTIVITIES','Archery':'OUTDOOR ACTIVITIES','Photography':'OUTDOOR ACTIVITIES','OffRoading':'OUTDOOR ACTIVITIES',
+      'Mudding':'OUTDOOR ACTIVITIES','Camping':'OUTDOOR ACTIVITIES','Fishing':'OUTDOOR ACTIVITIES','Hiking':'OUTDOOR ACTIVITIES',
+
+      'Friends':'PEOPLE','Family':'PEOPLE','Partner':'PEOPLE','Children':'PEOPLE','Pets':'PEOPLE','Romance':'PEOPLE',
+
+      'Football':'SPORTS','Baseball':'SPORTS','Soccer':'SPORTS','Basketball':'SPORTS','Golf':'SPORTS','Tennis':'SPORTS','Pickleball':'SPORTS','MartialArts':'SPORTS',
+      'Bowling':'SPORTS','Skateboarding':'SPORTS','Swimming':'SPORTS','OtherSport':'SPORTS','Gymnastics':'SPORTS','Volleyball':'SPORTS',
+
+      'Trucks':'TRANSPORTATION','Motorcycles':'TRANSPORTATION','Dirtbikes':'TRANSPORTATION','4Wheelers':'TRANSPORTATION','Trains':'TRANSPORTATION','Planes':'TRANSPORTATION',
+      'Traveling':'TRAVEL','Flying':'TRAVEL','Cruises':'TRAVEL'
+    };
+    return mapping[field] || 'GENERAL';
+  }
+
+  // scripture map (concise)
+  const scriptureMap = {
+    'GodJesusHolySpirit': 'Matthew 22:37 — "Love the Lord your God with all your heart..."',
+    'Bible': '2 Timothy 3:16 — "All Scripture is God-breathed..."',
+    'Prayer': 'Philippians 4:6 — "Do not be anxious about anything; in every situation, by prayer..."',
+    'FamilyTime': 'Ephesians 6:1-4 — "Honor your father and mother..."',
+    'CaringforOthers': 'Galatians 6:2 — "Carry each other\'s burdens..."',
+    'WorshipPraise': 'Psalm 95:1 — "Come, let us sing for joy to the Lord..."',
+    'Evangelism': 'Matthew 28:19 — "Go and make disciples of all nations."',
+    'Church': 'Hebrews 10:24-25 — "Let us consider how we may spur one another on..."',
+    'WorkJob': 'Colossians 3:23 — "Whatever you do, work at it with all your heart..."',
+    'AloneTime': 'Mark 1:35 — "Very early in the morning, while it was still dark, Jesus got up..."',
+    'Gardening': 'Genesis 2:15 — "The Lord God took the man and put him in the Garden of Eden to work it and take care of it."',
+    'Fishing': 'Matthew 4:19 — "Follow me, and I will make you fishers of men."',
+    'Music': 'Psalm 150:1 — "Praise the Lord. Praise God in his sanctuary..."'
+  };
+
+  function scriptureFor(field) {
+    if (scriptureMap[field]) return scriptureMap[field];
+    if (/Prayer|Praying/i.test(field)) return scriptureMap['Prayer'];
+    if (/Church|Worship|Praise|Evangelism|Preaching/i.test(field)) return scriptureMap['Church'];
+    if (/Family|Children|Partner|Friends/i.test(field)) return scriptureMap['FamilyTime'];
+    if (/Work|Job|Mentor|Supervis/i.test(field)) return scriptureMap['WorkJob'];
+    if (/Garden|Camping|Fishing|Hiking|Beach/i.test(field)) return scriptureMap['Gardening'];
+    if (/Music|Singing|PlayingMusic|ProducingMusic/i.test(field)) return scriptureMap['Music'];
+    return 'Psalm 37:4 — "Delight yourself in the Lord, and he will give you the desires of your heart."';
+  }
+
+  // reflection generator
+  function reflectionFor(field, score) {
+    const name = prettify(field);
+    const base = `You rated ${name} ${score}/20.`;
+    if (field === 'GodJesusHolySpirit') {
+      return base + ' Consider how prayer, Scripture, and worship shape your daily decisions. What next step will deepen that relationship?';
+    }
+    if (/Family|Children|Partner|Friends/i.test(field)) {
+      return base + ' Who in your circle needs more of your presence this season? Schedule one intentional conversation this week.';
+    }
+    if (/Work|Job|Career|Supervis/i.test(field)) {
+      return base + ' Reflect whether your work aligns with your calling. What small change would increase meaning in your daily tasks?';
+    }
+    if (/Prayer|Bible|Church|Worship|Evangelism|Preaching/i.test(field)) {
+      return base + ' How can you make space this week to practice this more intentionally (time, place, accountability)?';
+    }
+    if (/Exercise|Walking|Running|Gym|Yoga/i.test(field)) {
+      return base + ' A consistent, small habit is more sustainable than a big burst. What 15-minute habit could you start?';
+    }
+    if (/Alcohol|Beer|Liquor|Smoking|Vaping/i.test(field)) {
+      return base + ' Notice how this influences your relationships and spiritual life. What boundary or support would help you align choices with values?';
+    }
+    if (/Garden|Camping|Fishing|Hiking|Beach/i.test(field)) {
+      return base + ' Time outdoors often restores perspective. Plan one short outdoor time this week to reflect and pray.';
+    }
+    return base + ' Consider one practical step to bring this value into clearer alignment with your faith and daily life.';
+  }
+
+  // enforce selection limit and toggle rating inputs
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const field = cb.dataset.field;
+      const rateEl = ratingInputFor(field);
+
+      if (cb.checked) {
+        const currently = checkboxes.filter(c => c.checked).length;
+        if (currently > MAX_SELECT) {
+          // revert and inform
+          cb.checked = false;
+          // small, clear feedback
+          window.alert(`You may select exactly ${MAX_SELECT} items.`);
+          return;
+        }
+        if (rateEl) {
+          rateEl.disabled = false;
+          // ensure a sensible default if empty
+          if (!rateEl.value) rateEl.value = 10;
+        }
+      } else {
+        if (rateEl) {
+          rateEl.disabled = true;
+          rateEl.value = 10;
+        }
+      }
+      updateSelectedCount();
+    });
   });
-}
 
-function handleCheckboxChange(input) {
-  const name = input.value;
-  if (input.checked) {
-    if (selectedItems.length >= MAX_SELECTION) {
-      // prevent selecting more than 8
-      input.checked = false;
-      alert("You can only select exactly 8 items.");
+  // Reset behavior
+  resetBtn.addEventListener('click', () => {
+    checkboxes.forEach(cb => {
+      cb.checked = false;
+      const rateEl = ratingInputFor(cb.dataset.field);
+      if (rateEl) {
+        rateEl.disabled = true;
+        rateEl.value = 10;
+      }
+    });
+    updateSelectedCount();
+    topContainer.innerHTML = '';
+    reflectionBlock.style.display = 'none';
+  });
+
+  // Generate results
+  generateBtn.addEventListener('click', () => {
+    const selected = checkboxes
+      .filter(cb => cb.checked)
+      .map(cb => {
+        const field = cb.dataset.field;
+        const rateEl = ratingInputFor(field);
+        const raw = rateEl ? Number(rateEl.value) : NaN;
+        const score = Number.isFinite(raw) ? Math.max(1, Math.min(20, Math.round(raw))) : 10;
+        return { field, score };
+      });
+
+    if (selected.length !== MAX_SELECT) {
+      window.alert(`Please select exactly ${MAX_SELECT} items before generating results. Currently selected: ${selected.length}.`);
       return;
     }
-    selectedItems.push(name);
-  } else {
-    selectedItems = selectedItems.filter(n => n !== name);
-  }
-  updateSelectionCounter();
-}
 
-function updateSelectionCounter() {
-  selectionCounter.textContent = `Selected: ${selectedItems.length} / ${MAX_SELECTION}`;
-}
-
-// ----- STEP NAVIGATION -----
-function showStep(stepNumber) {
-  step1.classList.add("hidden");
-  step2.classList.add("hidden");
-  step3.classList.add("hidden");
-
-  if (stepNumber === 1) step1.classList.remove("hidden");
-  if (stepNumber === 2) step2.classList.remove("hidden");
-  if (stepNumber === 3) step3.classList.remove("hidden");
-}
-
-// ----- STEP 1 → STEP 2 -----
-toStep2Btn.addEventListener("click", () => {
-  if (selectedItems.length !== MAX_SELECTION) {
-    alert("Please select exactly 8 items before continuing.");
-    return;
-  }
-  renderRatings();
-  showStep(2);
-});
-
-backToStep1Btn.addEventListener("click", () => {
-  showStep(1);
-});
-
-// ----- RENDER RATINGS FOR SELECTED ITEMS -----
-function renderRatings() {
-  ratingsContainer.innerHTML = "";
-  ratings = {};
-
-  selectedItems.forEach(name => {
-    const row = document.createElement("div");
-    row.className = "rating-row";
-
-    const label = document.createElement("div");
-    label.className = "rating-label";
-    label.textContent = name;
-
-    const input = document.createElement("input");
-    input.type = "number";
-    input.min = "1";
-    input.max = "10";
-    input.value = "5";
-    input.className = "rating-input";
-
-    input.addEventListener("change", () => {
-      let val = Number(input.value);
-      if (isNaN(val) || val < 1) val = 1;
-      if (val > 10) val = 10;
-      input.value = val;
-      ratings[name] = val;
+    // sort by score descending; tie-breaker: GodJesusHolySpirit prioritized
+    selected.sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      if (a.field === 'GodJesusHolySpirit' && b.field !== 'GodJesusHolySpirit') return -1;
+      if (b.field === 'GodJesusHolySpirit' && a.field !== 'GodJesusHolySpirit') return 1;
+      return a.field.localeCompare(b.field);
     });
 
-    ratings[name] = 5; // default
+    // render results
+    topContainer.innerHTML = '';
+    selected.forEach((it, idx) => {
+      const displayName = prettify(it.field);
+      const verse = scriptureFor(it.field);
+      const reflect = reflectionFor(it.field, it.score);
 
-    row.appendChild(label);
-    row.appendChild(input);
-    ratingsContainer.appendChild(row);
+      const itemEl = document.createElement('div');
+      itemEl.className = 'top-item';
+      itemEl.innerHTML = `
+        <div class="badge">${idx + 1}</div>
+        <div class="meta">
+          <h4>${escapeHtml(displayName)} — ${it.score}/20</h4>
+          <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px;">Category: ${escapeHtml(categoryOfField(it.field))}</p>
+          <div class="scripture">${escapeHtml(verse)}</div>
+          <p style="margin:8px 0 0 0;color:#333;font-size:13px;">${escapeHtml(reflect)}</p>
+        </div>
+      `;
+      topContainer.appendChild(itemEl);
+    });
+
+    // overall reflection: top three summary
+    const topThree = selected.slice(0, 3).map(s => `${prettify(s.field)} (${s.score}/20)`);
+    reflectionText.innerHTML = `Your top priorities are: <strong>${escapeHtml(topThree.join(', '))}</strong>. Pray and ask God to clarify how these priorities should shape your time, relationships, and decisions this week. Consider one concrete step for each top priority.`;
+    reflectionBlock.style.display = 'block';
+    reflectionBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
-}
 
-// ----- STEP 2 → STEP 3 (CALCULATE) -----
-toStep3Btn.addEventListener("click", () => {
-  // Ensure all ratings are valid numbers
-  for (const name of selectedItems) {
-    const val = Number(ratings[name]);
-    if (isNaN(val)) {
-      alert("Please ensure all ratings are valid numbers.");
-      return;
-    }
+  // small utility to escape HTML when injecting text
+  function escapeHtml(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
-  const narrative = calculateNarrative();
-  resultsNarrative.textContent = narrative;
-  showStep(3);
-});
-
-// ----- START OVER -----
-startOverBtn.addEventListener("click", () => {
-  // Reset selections
-  selectedItems = [];
-  ratings = {};
-  Array.from(checkboxList.querySelectorAll("input[type=checkbox]")).forEach(cb => {
-    cb.checked = false;
-  });
-  updateSelectionCounter();
-  showStep(1);
-});
-
-// ----- CORE LOGIC: SORT, TIE RULE, NARRATIVE -----
-function calculateNarrative() {
-  // 1. Load items and ratings
-  let items = selectedItems.map(name => ({
-    name,
-    rating: Number(ratings[name])
-  }));
-
-  // 2. Sort normally (highest rating first)
-  items.sort((a, b) => b.rating - a.rating);
-
-  // 3. Apply special rule:
-  // If GodJesusHolySpirit ties with anything, it loses the tie
-  let specialRuleApplied = false;
-
-  for (let i = 0; i < items.length - 1; i++) {
-    const current = items[i];
-    const next = items[i + 1];
-
-    if (current.rating === next.rating) {
-      // Case 1: God is in the upper position → swap down
-      if (current.name === "GodJesusHolySpirit") {
-        items[i] = next;
-        items[i + 1] = current;
-        specialRuleApplied = true;
+  // initialize: disable all rating inputs until checked
+  (function initRatings() {
+    checkboxes.forEach(cb => {
+      const rateEl = ratingInputFor(cb.dataset.field);
+      if (rateEl) {
+        rateEl.disabled = true;
+        if (!rateEl.value) rateEl.value = 10;
       }
-      // Case 2: God is in the lower position → still a tie
-      else if (next.name === "GodJesusHolySpirit") {
-        specialRuleApplied = true;
-        // No swap needed
-      }
-    }
-  }
+    });
+    updateSelectedCount();
+  })();
 
-  // 4. Build narrative text
-  let narrative = "Here is your ranked list of what matters most to you right now:\n\n";
-
-  for (let i = 0; i < items.length; i++) {
-    narrative += `${i + 1}. ${items[i].name} (Weight: ${items[i].rating})\n`;
-  }
-
-  // 5. Scripture reflections
-  narrative += "\n\nScripture Reflections:\n";
-
-  narrative += "\nMatthew 6:19–20 (NKJV): ";
-  narrative += "“Do not lay up for yourselves treasures on earth, where moth and rust destroy and where thieves break in and steal; ";
-  narrative += "but lay up for yourselves treasures in heaven, where neither moth nor rust destroys and where thieves do not break in and steal.”";
-
-  narrative += "\n\nLuke 14:26 (NLT): ";
-  narrative += "“If you want to be my disciple, you must, by comparison, hate everyone else—your father and mother, wife and children, ";
-  narrative += "brothers and sisters—yes, even your own life. Otherwise, you cannot be my disciple.”";
-
-  narrative += "\n\nMatthew 6:20 (NKJV): ";
-  narrative += "“For where your treasure is, there your heart will be also.”";
-
-  // 6. Reflection paragraph BELOW the verses, only if rule was applied
-  if (specialRuleApplied) {
-    narrative += "\n\nReflection:\n";
-    narrative += "When a tie occurs involving GodJesusHolySpirit, this assessment intentionally places Them slightly lower. ";
-    narrative += "This is not to diminish Their importance, but to remind us that God should be loved above everything and everyone. ";
-    narrative += "If God ties with anything in our hearts, it reveals an opportunity to realign our priorities so that our love for Him ";
-    narrative += "remains first, highest, and unmatched.";
-  }
-
-  return narrative;
-}
-
-// ----- INIT -----
-renderCheckboxes();
-updateSelectionCounter();
-showStep(1);
+})();
