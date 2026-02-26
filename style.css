@@ -18,6 +18,7 @@ body{
 
 header{ text-align:center; margin-bottom:24px }
 h1{ margin:0 0 6px 0; font-size:1.6rem }
+.subtitle{ margin:6px 0 10px 0; color:#dfe7e9; font-style:italic }
 h2{ color:var(--accent); margin:0 0 12px 0 }
 
 .category{
@@ -68,6 +69,8 @@ button:hover{ filter:brightness(1.05) }
   color:#e8e8e2;
   font-style:italic;
 }
+
+.download-area{ margin-top:16px; }
 
 /* responsive */
 @media (max-width:700px){
