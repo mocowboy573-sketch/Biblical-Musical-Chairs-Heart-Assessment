@@ -1,11 +1,3 @@
-/* Treasure of Our Heart Assessment — script.js
-   - Builds categories and items
-   - Enforces exactly 8 selections
-   - Allows rating each selected item 1–20 (duplicates allowed)
-   - Tie-breaker: if God/Jesus/Holy Spirit ties with any item, God is moved DOWN
-   - Narrative box shows static scriptures and tie message only if triggered
-*/
-
 const categories = {
   "Collections":[
     "Money","Heirlooms","Souvenirs","Antiques","Watches","Shoes","Hats","Clothes","Toys",
@@ -141,9 +133,9 @@ document.getElementById('seeResults').addEventListener('click', ()=>{
   const narrative = document.getElementById('narrativeBox');
   narrative.style.display = 'block';
 
-  // show tie-breaker message only if triggered
+  // show tie-breaker message only if triggered (user-provided verbiage)
   const tieMsg = document.getElementById('tieBreakerMessage');
   tieMsg.textContent = tieBreakerTriggered
-    ? 'A tie occurred with God/Jesus/Holy Spirit. God/Jesus/Holy Spirit was moved down because nothing should tie with our love for Them.'
+    ? `Matthew 22:37, "Jesus said to him, 'You shall love the LORD your God with all your heart, with all your soul, and with all your mind.'" The reason God/Jesus/Holy Spirit was bumped down when a tie occured is because we should love God, Jesus, and Holy Spirit more than we love anything or anyone else.`
     : '';
 });
