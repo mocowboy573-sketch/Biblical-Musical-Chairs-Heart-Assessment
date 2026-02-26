@@ -104,18 +104,29 @@ document.getElementById("seeResults").onclick = () => {
 
     let sorted = Object.entries(ratings).sort((a,b) => b[1] - a[1]);
 
+    let tieBreakerTriggered = false;
+
+    // Corrected tie-breaker: God moves DOWN
     const godIndex = sorted.findIndex(([item]) => item === "God/Jesus/Holy Spirit");
 
-    if (godIndex > 0) {
+    if (godIndex !== -1) {
         const godRating = sorted[godIndex][1];
-        const aboveRating = sorted[godIndex - 1][1];
 
-        if (godRating === aboveRating) {
+        const tiedItems = sorted.filter(([item, rating]) => rating === godRating);
+
+        if (tiedItems.length > 1) {
+            tieBreakerTriggered = true;
+
             const godEntry = sorted.splice(godIndex, 1)[0];
-            sorted.unshift(godEntry);
+
+            let lastTieIndex = sorted.findIndex(([item, rating]) => rating < godRating);
+            if (lastTieIndex === -1) lastTieIndex = sorted.length;
+
+            sorted.splice(lastTieIndex, 0, godEntry);
         }
     }
 
+    // Display results
     const resultsDiv = document.getElementById("results");
     resultsDiv.style.display = "block";
 
@@ -123,4 +134,13 @@ document.getElementById("seeResults").onclick = () => {
     sorted.forEach(([item, rating], index) => {
         resultsDiv.innerHTML += `<p><strong>${index+1}.</strong> ${item} — Rating: ${rating}</p>`;
     });
+
+    // Narrative box
+    const narrative = document.getElementById("narrativeBox");
+    narrative.style.display = "block";
+
+    const tieMsg = document.getElementById("tieBreakerMessage");
+    tieMsg.innerHTML = tieBreakerTriggered
+        ? "A tie occurred with God/Jesus/Holy Spirit. God/Jesus/Holy Spirit was moved down because nothing should tie with our love for Them."
+        : "";
 };
